@@ -85,23 +85,23 @@ public class HomePanel extends javax.swing.JPanel {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        headerPanel = new ShadowPanel(4, Color.decode("#DFDFDF"));
+        headerPanel = new ShadowPanel(6, Color.decode("#DFDFDF"));
         labelGreetings = new javax.swing.JLabel();
-        cardDashboard = new ShadowPanel(4, Color.decode("#DFDFDF"));
+        cardDashboard = new ShadowPanel(6, Color.decode("#DFDFDF"));
         labelDashboard = new javax.swing.JLabel();
-        pasienCard = new RoundedPanel(12, Color.decode("#D6EFD8"));
+        pasienCard = new RoundedPanel(16, Color.decode("#D6EFD8"));
         pasienIcon = new javax.swing.JLabel();
         labelCardPasien = new javax.swing.JLabel();
         labelNumberPasien = new javax.swing.JLabel();
-        antrianCard = new RoundedPanel(12, Color.decode("#D6EFD8"));
+        antrianCard = new RoundedPanel(16, Color.decode("#D6EFD8"));
         antrianIcon = new javax.swing.JLabel();
         labelCardAntrian = new javax.swing.JLabel();
         labelNumberAntrian = new javax.swing.JLabel();
-        doterCard = new RoundedPanel(12, Color.decode("#D6EFD8"));
+        doterCard = new RoundedPanel(16, Color.decode("#D6EFD8"));
         dokterIcon = new javax.swing.JLabel();
         labelCardDokter = new javax.swing.JLabel();
         labelNumberDokter = new javax.swing.JLabel();
-        cardDashboardAntrian = new ShadowPanel(4, Color.decode("#DFDFDF"));
+        cardDashboardAntrian = new ShadowPanel(6, Color.decode("#DFDFDF"));
         labelTitleAntrian = new javax.swing.JLabel();
         panelTabelAntrian = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -159,8 +159,10 @@ public class HomePanel extends javax.swing.JPanel {
 
         labelNumberPasien.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
         labelNumberPasien.setForeground(Color.decode("#80AF81"));
-        labelNumberPasien.setText("20");
-        pasienCard.add(labelNumberPasien, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+        labelNumberPasien.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        labelNumberPasien.setText("0");
+        labelNumberPasien.setPreferredSize(new java.awt.Dimension(34, 39));
+        pasienCard.add(labelNumberPasien, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 50, -1));
 
         antrianCard.setPreferredSize(new java.awt.Dimension(250, 120));
         antrianCard.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -175,7 +177,9 @@ public class HomePanel extends javax.swing.JPanel {
 
         labelNumberAntrian.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
         labelNumberAntrian.setForeground(Color.decode("#80AF81"));
-        labelNumberAntrian.setText("20");
+        labelNumberAntrian.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        labelNumberAntrian.setText("0");
+        labelNumberAntrian.setPreferredSize(new java.awt.Dimension(34, 39));
         antrianCard.add(labelNumberAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
         doterCard.setPreferredSize(new java.awt.Dimension(250, 120));
@@ -191,8 +195,11 @@ public class HomePanel extends javax.swing.JPanel {
 
         labelNumberDokter.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
         labelNumberDokter.setForeground(Color.decode("#80AF81"));
-        labelNumberDokter.setText("20");
-        doterCard.add(labelNumberDokter, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+        labelNumberDokter.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        labelNumberDokter.setText("0");
+        labelNumberDokter.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        labelNumberDokter.setPreferredSize(new java.awt.Dimension(34, 39));
+        doterCard.add(labelNumberDokter, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 20, 40, -1));
 
         javax.swing.GroupLayout cardDashboardLayout = new javax.swing.GroupLayout(cardDashboard);
         cardDashboard.setLayout(cardDashboardLayout);
@@ -261,7 +268,7 @@ public class HomePanel extends javax.swing.JPanel {
 
         panelTabelAntrian.add(jScrollPane1, "card2");
 
-        cardDashboardAntrian.add(panelTabelAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 940, 240));
+        cardDashboardAntrian.add(panelTabelAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 920, 240));
 
         mainPanel.add(cardDashboardAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 990, 320));
 
