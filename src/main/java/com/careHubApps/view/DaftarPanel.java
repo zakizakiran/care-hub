@@ -5,17 +5,73 @@
  */
 package main.java.com.careHubApps.view;
 
+import java.awt.Font;
+import java.io.File;
+import resources.components.ShadowPanel;
+import resources.components.RoundedPanel;
+import resources.components.CustomTextField;
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JPanel;
+import resources.components.ComboBox;
+        
 /**
  *
  * @author ASUS
  */
 public class DaftarPanel extends javax.swing.JPanel {
-
+    
+    // Inisialisasi variabel warna
+    String primaryColor = "#1A5319";
+    String hoverColor = "#00000";
+    
     /**
      * Creates new form HomePanel
      */
     public DaftarPanel() {
         initComponents();
+        
+        comboGolDarah.setSelectedIndex(-1);
+        comboJenKel.setSelectedIndex(-1);
+        comboDokter.setSelectedIndex(-1);
+        
+        try {
+            File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
+            File poppinsSemiBold = new File("src/resources/assets/fonts/Poppins-SemiBold.ttf");
+            File poppinsBold = new File("src/resources/assets/fonts/Poppins-Bold.ttf");
+           
+            Font titleTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(20f);
+            Font labelInputTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(16f);
+            Font labelButtonStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(14f);
+            Font txtFieldStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(14f);
+            
+            
+            titleDaftarPanel.setFont(titleTxtStyle);
+            
+            labelInputNama.setFont(labelInputTxtStyle);
+            labelInputEmail.setFont(labelInputTxtStyle);
+            labelInputHP.setFont(labelInputTxtStyle);
+            labelInputTgl.setFont(labelInputTxtStyle);
+            
+            labelButtonSimpan.setFont(labelButtonStyle);
+            
+            comboJenKel.setFont(labelButtonStyle);
+            comboGolDarah.setFont(labelButtonStyle);
+            comboDokter.setFont(labelButtonStyle);
+            
+            txtFieldNama.setFont(txtFieldStyle);
+            txtFieldTglLahir.setFont(txtFieldStyle);
+            txtFieldEmail.setFont(txtFieldStyle);
+            txtFieldHp.setFont(txtFieldStyle);
+            
+            
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        setupHoverEffect(simpanButton, Color.decode(primaryColor), Color.decode(hoverColor));
+
     }
 
     /**
@@ -27,18 +83,169 @@ public class DaftarPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        mainPanel = new javax.swing.JPanel();
+        cardHeader = new ShadowPanel(6, Color.decode("#DFDFDF"));
+        titleDaftarPanel = new javax.swing.JLabel();
+        bodyPanel = new ShadowPanel(8, Color.decode("#DFDFDF"));
+        txtFieldNama = new CustomTextField(15, 15, 15, Color.decode("#80AF81"), "Your Name");
+        labelInputNama = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        labelInputTgl = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtFieldTglLahir = new CustomTextField(15, 15, 15, Color.decode("#80AF81"), "DD/MM/YYYY");
+        jLabel5 = new javax.swing.JLabel();
+        labelInputHP = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtFieldHp = new CustomTextField(15, 15, 15, Color.decode("#80AF81"), "081234567890");
+        txtFieldEmail = new CustomTextField(15, 15, 15, Color.decode("#80AF81"), "your-email@example");
+        labelInputEmail = new javax.swing.JLabel();
+        simpanButton = new RoundedPanel(12, Color.decode("#508D4E"));
+        labelButtonSimpan = new javax.swing.JLabel();
+        comboGolDarah = new ComboBox("Golongan Darah");
+        comboJenKel = new ComboBox("Jenis Kelamin");
+        comboDokter = new ComboBox("Pilih Dokter");
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1040, 1080));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(new java.awt.CardLayout());
 
-        jLabel1.setText("Ini Daftar");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, -1, -1));
+        mainPanel.setBackground(new java.awt.Color(255, 255, 255));
+        mainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cardHeader.setBackground(new java.awt.Color(255, 255, 255));
+        cardHeader.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        titleDaftarPanel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        titleDaftarPanel.setText("FORM PENDAFTARAN");
+        cardHeader.add(titleDaftarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        mainPanel.add(cardHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 1000, 50));
+
+        bodyPanel.setBackground(new java.awt.Color(255, 255, 255));
+        bodyPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtFieldNama.setMargin(new java.awt.Insets(4, 4, 4, 4));
+        bodyPanel.add(txtFieldNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 430, 40));
+
+        labelInputNama.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        labelInputNama.setText("Nama Lengkap");
+        bodyPanel.add(labelInputNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 150, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel2.setText("*");
+        bodyPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 10, -1));
+
+        labelInputTgl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        labelInputTgl.setText("Tanggal Lahir");
+        bodyPanel.add(labelInputTgl, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 140, 20));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel4.setText("*");
+        bodyPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, -1, 10));
+
+        txtFieldTglLahir.setMargin(new java.awt.Insets(4, 4, 4, 4));
+        bodyPanel.add(txtFieldTglLahir, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 430, 40));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/daftar.png"))); // NOI18N
+        bodyPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 130, 320, -1));
+
+        labelInputHP.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        labelInputHP.setText("Nomor HP");
+        bodyPanel.add(labelInputHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 110, 20));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel6.setText("*");
+        bodyPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, -1, 20));
+
+        txtFieldHp.setMargin(new java.awt.Insets(4, 4, 4, 4));
+        bodyPanel.add(txtFieldHp, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 190, 40));
+
+        txtFieldEmail.setMargin(new java.awt.Insets(4, 4, 4, 4));
+        bodyPanel.add(txtFieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 350, 200, 40));
+
+        labelInputEmail.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        labelInputEmail.setText("Email");
+        bodyPanel.add(labelInputEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, -1, 20));
+
+        simpanButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        labelButtonSimpan.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        labelButtonSimpan.setForeground(new java.awt.Color(255, 255, 255));
+        labelButtonSimpan.setText("Simpan Data");
+
+        javax.swing.GroupLayout simpanButtonLayout = new javax.swing.GroupLayout(simpanButton);
+        simpanButton.setLayout(simpanButtonLayout);
+        simpanButtonLayout.setHorizontalGroup(
+            simpanButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(simpanButtonLayout.createSequentialGroup()
+                .addGap(164, 164, 164)
+                .addComponent(labelButtonSimpan)
+                .addContainerGap(166, Short.MAX_VALUE))
+        );
+        simpanButtonLayout.setVerticalGroup(
+            simpanButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(simpanButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelButtonSimpan)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        bodyPanel.add(simpanButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 420, 40));
+
+        comboGolDarah.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "AB", "O" }));
+        bodyPanel.add(comboGolDarah, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, 210, 40));
+
+        comboJenKel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-Laki", "Perempuan" }));
+        bodyPanel.add(comboJenKel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 180, 40));
+
+        comboDokter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dokter Umum", "Dokter Gigi", "THT", "Mata" }));
+        bodyPanel.add(comboDokter, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 190, 40));
+
+        mainPanel.add(bodyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 1000, 590));
+
+        add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setupHoverEffect(JPanel button, Color defaultColor, Color hoverColor) {
+        button.setBackground(defaultColor);
+
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(hoverColor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(defaultColor);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel bodyPanel;
+    private javax.swing.JPanel cardHeader;
+    private javax.swing.JComboBox<String> comboDokter;
+    private javax.swing.JComboBox<String> comboGolDarah;
+    private javax.swing.JComboBox<String> comboJenKel;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel labelButtonSimpan;
+    private javax.swing.JLabel labelInputEmail;
+    private javax.swing.JLabel labelInputHP;
+    private javax.swing.JLabel labelInputNama;
+    private javax.swing.JLabel labelInputTgl;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel simpanButton;
+    private javax.swing.JLabel titleDaftarPanel;
+    private javax.swing.JTextField txtFieldEmail;
+    private javax.swing.JTextField txtFieldHp;
+    private javax.swing.JTextField txtFieldNama;
+    private javax.swing.JTextField txtFieldTglLahir;
     // End of variables declaration//GEN-END:variables
 }
