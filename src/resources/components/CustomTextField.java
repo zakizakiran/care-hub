@@ -8,19 +8,22 @@ import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.FontMetrics;
 
 public class CustomTextField extends JTextField {
     private int arcWidth;
     private int arcHeight;
     private Color borderColor;
     private String hint;
+    private int hintMarginLeft;
 
-    public CustomTextField(int columns, int arcWidth, int arcHeight, Color borderColor, String hint) {
+    public CustomTextField(int columns, int arcWidth, int arcHeight, Color borderColor, String hint, int hintMarginLeft) {
         super(columns);
         this.arcWidth = arcWidth;
         this.arcHeight = arcHeight;
         this.borderColor = borderColor;
         this.hint = hint;
+        this.hintMarginLeft = hintMarginLeft;
         setOpaque(false); // Make the text field transparent
 
         // Add a focus listener to repaint on focus gain/loss
@@ -47,9 +50,15 @@ public class CustomTextField extends JTextField {
 
         // Draw the hint if needed
         if (getText().isEmpty() && !hasFocus()) {
-            int padding = (getHeight() - getFont().getSize()) / 2;
+            FontMetrics fontMetrics = g2.getFontMetrics();
+            int textWidth = fontMetrics.stringWidth(hint);
+            int textHeight = fontMetrics.getAscent();
+            int textX = hintMarginLeft;
+            int textY = (getHeight() + textHeight) / 2 - 2; // Center text vertically
+
+            // Set hint text color and draw it
             g2.setColor(getDisabledTextColor());
-            g2.drawString(hint, 5, getHeight() - padding - 1); // Adjust position as needed
+            g2.drawString(hint, textX, textY);
         }
 
         g2.dispose();

@@ -8,7 +8,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
 import javax.swing.table.DefaultTableCellRenderer;
+import main.java.com.careHubApps.controller.AuthController;
+import main.java.com.careHubApps.controller.HomeController;
 import main.java.com.careHubApps.controller.NavigationController;
+import main.java.com.careHubApps.model.UserModel;
 import resources.components.ShadowPanel;
 import resources.components.RoundedPanel;
 
@@ -19,7 +22,10 @@ import resources.components.RoundedPanel;
 public class HomePanel extends javax.swing.JPanel {
     
     NavigationController navigationController;
+    AuthController authController;
+    HomeController homeController;
     MainView mainView;
+    LoginView loginView;
 
     /**
      * Creates new form HomePanel
@@ -29,49 +35,56 @@ public class HomePanel extends javax.swing.JPanel {
         initComponents();
         
         navigationController = new NavigationController();
+        homeController = new HomeController();
+        
+        String nama = HomeController.getCurrentUser().getName();
         
         try {
-         File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
-         File poppinsSemiBold = new File("src/resources/assets/fonts/Poppins-SemiBold.ttf");
-         File poppinsBold = new File("src/resources/assets/fonts/Poppins-Bold.ttf");
+            File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
+            File poppinsSemiBold = new File("src/resources/assets/fonts/Poppins-SemiBold.ttf");
+            File poppinsBold = new File("src/resources/assets/fonts/Poppins-Bold.ttf");
 
-         Font greetTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(16f);
-         Font dashboardTitleTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(20f);
-         
-         Font cardTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(14f);
-         Font cardNumberTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(32f);
+            Font greetTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(16f);
+            Font dashboardTitleTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(20f);
 
-         labelGreetings.setFont(greetTxtStyle);
-         labelDashboard.setFont(dashboardTitleTxtStyle);
-         
-         labelCardDokter.setFont(cardTxtStyle);
-         labelNumberDokter.setFont(cardNumberTxtStyle);
-         
-         labelCardPasien.setFont(cardTxtStyle);
-         mainPanel.setFont(cardNumberTxtStyle);
-         
-         labelCardAntrian.setFont(cardTxtStyle);
-         labelTitleAntrian.setFont(dashboardTitleTxtStyle);
+            Font cardTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(14f);
+            Font cardNumberTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(32f);
+
+            labelGreetings.setFont(greetTxtStyle);
+            labelDashboard.setFont(dashboardTitleTxtStyle);
+
+            labelCardDokter.setFont(cardTxtStyle);
+            labelNumberDokter.setFont(cardNumberTxtStyle);
+
+            labelCardPasien.setFont(cardTxtStyle);
+
+            labelCardAntrian.setFont(cardTxtStyle);
+            labelTitleAntrian.setFont(dashboardTitleTxtStyle);
+
+            labelNama.setFont(cardTxtStyle);
          
                
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setBackground(Color.decode("#508D4E"));
-        headerRenderer.setForeground(Color.WHITE);
-        headerRenderer.setFont(cardTxtStyle);
+            DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+            headerRenderer.setBackground(Color.decode("#508D4E"));
+            headerRenderer.setForeground(Color.WHITE);
+            headerRenderer.setFont(cardTxtStyle);
 
-        for (int i = 0; i < tabelAntrian.getColumnModel().getColumnCount(); i++) {
-            tabelAntrian.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
-        }
+            for (int i = 0; i < tabelAntrian.getColumnModel().getColumnCount(); i++) {
+                tabelAntrian.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+            }
 
-        // Validate and repaint the header
-        tabelAntrian.getTableHeader().revalidate();
-        tabelAntrian.getTableHeader().repaint();
+            // Validate and repaint the header
+            tabelAntrian.getTableHeader().revalidate();
+            tabelAntrian.getTableHeader().repaint();
 
 
-     } catch (Exception e) {
-         e.printStackTrace();
+     }  catch (Exception e) {
+            e.printStackTrace();
 
      }
+        
+        labelNama.setText(nama);
+        updateJumlahPasien();
 
 }
 
@@ -87,6 +100,8 @@ public class HomePanel extends javax.swing.JPanel {
         mainPanel = new javax.swing.JPanel();
         headerPanel = new ShadowPanel(6, Color.decode("#DFDFDF"));
         labelGreetings = new javax.swing.JLabel();
+        labelNama = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         cardDashboard = new ShadowPanel(6, Color.decode("#DFDFDF"));
         labelDashboard = new javax.swing.JLabel();
         pasienCard = new RoundedPanel(16, Color.decode("#D6EFD8"));
@@ -122,24 +137,39 @@ public class HomePanel extends javax.swing.JPanel {
         labelGreetings.setText("Halo, CareMin!");
         labelGreetings.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
+        labelNama.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        labelNama.setText("Anonymous");
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/default_profile.png"))); // NOI18N
+
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
         headerPanelLayout.setHorizontalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(27, 27, 27)
                 .addComponent(labelGreetings)
-                .addContainerGap(838, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 647, Short.MAX_VALUE)
+                .addComponent(labelNama, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18))
         );
         headerPanelLayout.setVerticalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelGreetings)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelNama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(headerPanelLayout.createSequentialGroup()
+                        .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(labelGreetings, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
-        mainPanel.add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 990, 50));
+        mainPanel.add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 990, 60));
 
         cardDashboard.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -276,6 +306,10 @@ public class HomePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 
+    private void updateJumlahPasien() {
+        int jumlahPasien = homeController.hitungPasien();
+        labelNumberPasien.setText(String.valueOf(jumlahPasien));
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel antrianCard;
@@ -285,12 +319,14 @@ public class HomePanel extends javax.swing.JPanel {
     private javax.swing.JLabel dokterIcon;
     private javax.swing.JPanel doterCard;
     private javax.swing.JPanel headerPanel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelCardAntrian;
     private javax.swing.JLabel labelCardDokter;
     private javax.swing.JLabel labelCardPasien;
     private javax.swing.JLabel labelDashboard;
     private javax.swing.JLabel labelGreetings;
+    private javax.swing.JLabel labelNama;
     private javax.swing.JLabel labelNumberAntrian;
     private javax.swing.JLabel labelNumberDokter;
     private javax.swing.JLabel labelNumberPasien;

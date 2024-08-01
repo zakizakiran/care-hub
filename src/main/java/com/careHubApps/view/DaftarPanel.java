@@ -13,7 +13,11 @@ import resources.components.CustomTextField;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import main.java.com.careHubApps.DatabaseConnection;
+import main.java.com.careHubApps.controller.PasienController;
+import main.java.com.careHubApps.model.PasienModel;
 import resources.components.ComboBox;
         
 /**
@@ -21,6 +25,9 @@ import resources.components.ComboBox;
  * @author ASUS
  */
 public class DaftarPanel extends javax.swing.JPanel {
+    
+    PasienController pasienController;
+    DatabaseConnection dbConnection;
     
     // Inisialisasi variabel warna
     String primaryColor = "#1A5319";
@@ -31,6 +38,9 @@ public class DaftarPanel extends javax.swing.JPanel {
      */
     public DaftarPanel() {
         initComponents();
+        
+        pasienController = new PasienController();
+        dbConnection = new DatabaseConnection();
         
         comboGolDarah.setSelectedIndex(-1);
         comboJenKel.setSelectedIndex(-1);
@@ -87,17 +97,17 @@ public class DaftarPanel extends javax.swing.JPanel {
         cardHeader = new ShadowPanel(6, Color.decode("#DFDFDF"));
         titleDaftarPanel = new javax.swing.JLabel();
         bodyPanel = new ShadowPanel(8, Color.decode("#DFDFDF"));
-        txtFieldNama = new CustomTextField(15, 15, 15, Color.decode("#80AF81"), "Your Name");
+        txtFieldNama = new CustomTextField(15, 15, 15, Color.decode("#80AF81"), "Your Name", 8);
         labelInputNama = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         labelInputTgl = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtFieldTglLahir = new CustomTextField(15, 15, 15, Color.decode("#80AF81"), "DD/MM/YYYY");
+        txtFieldTglLahir = new CustomTextField(15, 15, 15, Color.decode("#80AF81"), "DD/MM/YYYY", 8);
         jLabel5 = new javax.swing.JLabel();
         labelInputHP = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtFieldHp = new CustomTextField(15, 15, 15, Color.decode("#80AF81"), "081234567890");
-        txtFieldEmail = new CustomTextField(15, 15, 15, Color.decode("#80AF81"), "your-email@example");
+        txtFieldHp = new CustomTextField(15, 15, 15, Color.decode("#80AF81"), "081234567890", 8);
+        txtFieldEmail = new CustomTextField(15, 15, 15, Color.decode("#80AF81"), "yourmail@example", 8);
         labelInputEmail = new javax.swing.JLabel();
         simpanButton = new RoundedPanel(12, Color.decode("#508D4E"));
         labelButtonSimpan = new javax.swing.JLabel();
@@ -171,6 +181,11 @@ public class DaftarPanel extends javax.swing.JPanel {
         bodyPanel.add(labelInputEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, -1, 20));
 
         simpanButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        simpanButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                simpanButtonMouseClicked(evt);
+            }
+        });
 
         labelButtonSimpan.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelButtonSimpan.setForeground(new java.awt.Color(255, 255, 255));
@@ -195,7 +210,7 @@ public class DaftarPanel extends javax.swing.JPanel {
 
         bodyPanel.add(simpanButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 420, 40));
 
-        comboGolDarah.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "AB", "O" }));
+        comboGolDarah.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "AB", "O", "Tidak Tahu" }));
         bodyPanel.add(comboGolDarah, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, 210, 40));
 
         comboJenKel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-Laki", "Perempuan" }));
@@ -209,6 +224,31 @@ public class DaftarPanel extends javax.swing.JPanel {
         add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
+    private void simpanButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_simpanButtonMouseClicked
+        // TODO add your handling code here:
+        tambahPasien();
+    }//GEN-LAST:event_simpanButtonMouseClicked
+
+    private void tambahPasien(){
+        String name = txtFieldNama.getText();
+        String dateOfBirth = txtFieldTglLahir.getText();
+        String phoneNumber = txtFieldHp.getText();
+        String email = txtFieldEmail.getText();
+        String gender = comboJenKel.getSelectedItem().toString();
+        String bloodType = comboGolDarah.getSelectedItem().toString();
+        String doctor = comboDokter.getSelectedItem().toString();
+
+        String id = pasienController.generateUniqueId(dbConnection.getConnection());
+
+        PasienModel pasien = new PasienModel(id, name, dateOfBirth, phoneNumber, email, gender, bloodType, doctor);
+
+        if (pasienController.tambahPasien(pasien)) {
+            JOptionPane.showMessageDialog(this, "Data pasien berhasil disimpan dengan ID: " + id);
+        } else {
+            JOptionPane.showMessageDialog(this, "Gagal menyimpan data pasien");
+        }
+    }
+    
     private void setupHoverEffect(JPanel button, Color defaultColor, Color hoverColor) {
         button.setBackground(defaultColor);
 

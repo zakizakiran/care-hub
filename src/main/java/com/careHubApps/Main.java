@@ -5,7 +5,7 @@
  */
 package main.java.com.careHubApps;
 
-import main.java.com.careHubApps.view.MainView;
+import main.java.com.careHubApps.view.LoginView;
 
 /**
  *
@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args){
          java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainView().setVisible(true);
+                new LoginView().setVisible(true);
             }
         });
     }
