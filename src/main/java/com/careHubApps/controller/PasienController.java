@@ -7,9 +7,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class PasienController {
+
     private final DatabaseConnection dbConnection;
 
     public PasienController() {
@@ -39,6 +44,85 @@ public class PasienController {
         }
 
         return isAdded;
+    }
+
+    public boolean hapusPasien(String pasienId) {
+        Connection connection = dbConnection.getConnection();
+        boolean isDeleted = false;
+
+        String sql = "DELETE FROM pasien WHERE id_pasien = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, pasienId);
+            isDeleted = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isDeleted;
+    }
+
+    public List<PasienModel> getAllPatients() {
+        List<PasienModel> patients = new ArrayList<>();
+        Connection connection = dbConnection.getConnection();
+
+        String sql = "SELECT * FROM pasien";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String id = resultSet.getString("id_pasien");
+                String nama = resultSet.getString("nama");
+                String tglLahir = resultSet.getString("tgl_lahir");
+                String noTelpon = resultSet.getString("no_telpon");
+                String email = resultSet.getString("email");
+                String jenisKelamin = resultSet.getString("jenis_kelamin");
+                String golDarah = resultSet.getString("gol_darah");
+                String dokter = resultSet.getString("dokter");
+                patients.add(new PasienModel(id, nama, tglLahir, noTelpon, email, jenisKelamin, golDarah, dokter));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return patients;
+    }
+
+    public boolean updatePasien(PasienModel patient) {
+        Connection connection = dbConnection.getConnection();
+        boolean isUpdated = false;
+
+        String sql = "UPDATE pasien SET nama = ?, tgl_lahir = ?, no_telpon = ?, email = ?, jenis_kelamin = ?, gol_darah = ?, dokter = ? WHERE id_pasien = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, patient.getNama());
+            preparedStatement.setString(2, patient.getTglLahir());
+            preparedStatement.setString(3, patient.getNoTelpon());
+            preparedStatement.setString(4, patient.getEmail());
+            preparedStatement.setString(5, patient.getJenisKelamin());
+            preparedStatement.setString(6, patient.getGolDarah());
+            preparedStatement.setString(7, patient.getDokter());
+            preparedStatement.setString(8, patient.getId());
+
+            isUpdated = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isUpdated;
+    }
+
+    public Map<String, Integer> getJumlahPasienPerDokter() {
+        PasienController pasienController = new PasienController();
+        List<PasienModel> pasienList = pasienController.getAllPatients();
+        Map<String, Integer> jumlahPasienPerDokter = new HashMap<>();
+
+        for (PasienModel pasien : pasienList) {
+            String dokter = pasien.getDokter();
+            jumlahPasienPerDokter.put(dokter, jumlahPasienPerDokter.getOrDefault(dokter, 0) + 1);
+        }
+
+        return jumlahPasienPerDokter;
     }
 
     public String generateUniqueId(Connection connection) {

@@ -165,8 +165,8 @@ public class LoginView extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/logo_login.png"))); // NOI18N
         mainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, -1, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/background_login.png"))); // NOI18N
-        mainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 140, -1, -1));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/wowan_doctor.png"))); // NOI18N
+        mainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 110, -1, -1));
 
         getContentPane().add(mainPanel, "card2");
 

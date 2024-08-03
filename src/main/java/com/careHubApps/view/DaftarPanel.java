@@ -49,10 +49,9 @@ public class DaftarPanel extends javax.swing.JPanel {
         try {
             File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
             File poppinsSemiBold = new File("src/resources/assets/fonts/Poppins-SemiBold.ttf");
-            File poppinsBold = new File("src/resources/assets/fonts/Poppins-Bold.ttf");
            
             Font titleTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(20f);
-            Font labelInputTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(16f);
+            Font labelInputTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(14f);
             Font labelButtonStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(14f);
             Font txtFieldStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(14f);
             
@@ -63,7 +62,6 @@ public class DaftarPanel extends javax.swing.JPanel {
             labelInputEmail.setFont(labelInputTxtStyle);
             labelInputHP.setFont(labelInputTxtStyle);
             labelInputTgl.setFont(labelInputTxtStyle);
-            
             labelButtonSimpan.setFont(labelButtonStyle);
             
             comboJenKel.setFont(labelButtonStyle);
@@ -96,6 +94,7 @@ public class DaftarPanel extends javax.swing.JPanel {
         mainPanel = new javax.swing.JPanel();
         cardHeader = new ShadowPanel(6, Color.decode("#DFDFDF"));
         titleDaftarPanel = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         bodyPanel = new ShadowPanel(8, Color.decode("#DFDFDF"));
         txtFieldNama = new CustomTextField(15, 15, 15, Color.decode("#80AF81"), "Your Name", 8);
         labelInputNama = new javax.swing.JLabel();
@@ -116,20 +115,40 @@ public class DaftarPanel extends javax.swing.JPanel {
         comboDokter = new ComboBox("Pilih Dokter");
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(1040, 1080));
+        setPreferredSize(new java.awt.Dimension(1080, 720));
         setLayout(new java.awt.CardLayout());
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
         mainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cardHeader.setBackground(new java.awt.Color(255, 255, 255));
-        cardHeader.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         titleDaftarPanel.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        titleDaftarPanel.setText("FORM PENDAFTARAN");
-        cardHeader.add(titleDaftarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        titleDaftarPanel.setText("Form Pendaftaran");
 
-        mainPanel.add(cardHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 1000, 50));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/form_icon.png"))); // NOI18N
+
+        javax.swing.GroupLayout cardHeaderLayout = new javax.swing.GroupLayout(cardHeader);
+        cardHeader.setLayout(cardHeaderLayout);
+        cardHeaderLayout.setHorizontalGroup(
+            cardHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cardHeaderLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(titleDaftarPanel)
+                .addContainerGap(767, Short.MAX_VALUE))
+        );
+        cardHeaderLayout.setVerticalGroup(
+            cardHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, cardHeaderLayout.createSequentialGroup()
+                .addGroup(cardHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addComponent(titleDaftarPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        mainPanel.add(cardHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 1000, 60));
 
         bodyPanel.setBackground(new java.awt.Color(255, 255, 255));
         bodyPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -139,36 +158,36 @@ public class DaftarPanel extends javax.swing.JPanel {
 
         labelInputNama.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelInputNama.setText("Nama Lengkap");
-        bodyPanel.add(labelInputNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 150, -1));
+        bodyPanel.add(labelInputNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 130, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(204, 0, 0));
         jLabel2.setText("*");
-        bodyPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 10, -1));
+        bodyPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 10, -1));
 
         labelInputTgl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelInputTgl.setText("Tanggal Lahir");
-        bodyPanel.add(labelInputTgl, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 140, 20));
+        bodyPanel.add(labelInputTgl, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 120, 20));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(204, 0, 0));
         jLabel4.setText("*");
-        bodyPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, -1, 10));
+        bodyPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, -1, 10));
 
         txtFieldTglLahir.setMargin(new java.awt.Insets(4, 4, 4, 4));
         bodyPanel.add(txtFieldTglLahir, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 430, 40));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/daftar.png"))); // NOI18N
-        bodyPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 130, 320, -1));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/doctor_illustration.png"))); // NOI18N
+        bodyPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 70, 330, 450));
 
         labelInputHP.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelInputHP.setText("Nomor HP");
-        bodyPanel.add(labelInputHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 110, 20));
+        bodyPanel.add(labelInputHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 90, 20));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(204, 0, 0));
         jLabel6.setText("*");
-        bodyPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, -1, 20));
+        bodyPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, -1, 10));
 
         txtFieldHp.setMargin(new java.awt.Insets(4, 4, 4, 4));
         bodyPanel.add(txtFieldHp, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 190, 40));
@@ -244,6 +263,7 @@ public class DaftarPanel extends javax.swing.JPanel {
 
         if (pasienController.tambahPasien(pasien)) {
             JOptionPane.showMessageDialog(this, "Data pasien berhasil disimpan dengan ID: " + id);
+            clearInput();
         } else {
             JOptionPane.showMessageDialog(this, "Gagal menyimpan data pasien");
         }
@@ -264,6 +284,16 @@ public class DaftarPanel extends javax.swing.JPanel {
             }
         });
     }
+    
+    private void clearInput(){
+        txtFieldNama.setText("");
+        txtFieldTglLahir.setText("");
+        txtFieldHp.setText("");
+        txtFieldEmail.setText("");
+        comboJenKel.setSelectedIndex(-1);
+        comboGolDarah.setSelectedIndex(-1);
+        comboDokter.setSelectedIndex(-1);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bodyPanel;
@@ -272,6 +302,7 @@ public class DaftarPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> comboGolDarah;
     private javax.swing.JComboBox<String> comboJenKel;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

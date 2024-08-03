@@ -5,6 +5,8 @@
  */
 package main.java.com.careHubApps.view;
 
+import main.java.com.careHubApps.view.obat.ObatPanel;
+import main.java.com.careHubApps.view.pasien.PasienPanel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -34,6 +36,8 @@ public class MainView extends javax.swing.JFrame {
     // Inisialisasi variabel warna
     String primaryColor = "#1A5319";
     String secondaryColor = "#80AF81";
+    String dangerColor = "#F53F3F";
+    String altColor = "#ABABAB";
     
     private boolean isHomeActive = false;
     private boolean isDaftarActive = false;
@@ -41,6 +45,7 @@ public class MainView extends javax.swing.JFrame {
     private boolean isDokterActive = false;
     private boolean isObatActive = false;
     private boolean isAboutActive = false;
+    private boolean isLogoutActive = false;
 
     
     /**
@@ -58,6 +63,7 @@ public class MainView extends javax.swing.JFrame {
         setupHoverEffect(dokterButton, Color.decode(secondaryColor), Color.decode(primaryColor));
         setupHoverEffect(obatButton, Color.decode(secondaryColor), Color.decode(primaryColor));
         setupHoverEffect(aboutButton, Color.decode(secondaryColor), Color.decode(primaryColor));
+        setupHoverEffect(logoutButton, Color.decode(altColor), Color.decode(dangerColor));
         
         try {
             File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
@@ -72,6 +78,7 @@ public class MainView extends javax.swing.JFrame {
             labelDokter.setFont(menuButtonStyle);
             labelObat.setFont(menuButtonStyle);
             labelAboutUs.setFont(menuButtonStyle);
+            labelLogout.setFont(menuButtonStyle);
             
             
         } catch (Exception e) {
@@ -109,7 +116,7 @@ public class MainView extends javax.swing.JFrame {
         labelObat = new javax.swing.JLabel();
         aboutButton = new RoundedPanel(8, Color.decode("#80AF81"));
         labelAboutUs = new javax.swing.JLabel();
-        logoutButton = new RoundedPanel(8, Color.decode("#80AF81"));
+        logoutButton = new RoundedPanel(8, Color.decode("#F53F3F"));
         labelLogout = new javax.swing.JLabel();
         bodyPanel = new javax.swing.JPanel();
         contentPanel = new javax.swing.JPanel();
@@ -276,7 +283,7 @@ public class MainView extends javax.swing.JFrame {
 
         labelLogout.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelLogout.setForeground(new java.awt.Color(255, 255, 255));
-        labelLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/info_icon.png"))); // NOI18N
+        labelLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/logout_icon.png"))); // NOI18N
         labelLogout.setText("Logout");
         labelLogout.setIconTextGap(28);
         logoutButton.add(labelLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 150, 50));
@@ -349,7 +356,8 @@ public class MainView extends javax.swing.JFrame {
                     (button == pasienButton && !isPasienActive) ||
                     (button == dokterButton && !isDokterActive)||
                     (button == obatButton && !isObatActive) ||
-                    (button == aboutButton && !isAboutActive)) {
+                    (button == aboutButton && !isAboutActive)||
+                    (button == logoutButton && !isLogoutActive)) {
                         button.setBackground(hoverColor);
                 }
             }
@@ -361,7 +369,8 @@ public class MainView extends javax.swing.JFrame {
                     (button == pasienButton && !isPasienActive) ||
                     (button == dokterButton && !isDokterActive) ||
                     (button == obatButton && !isObatActive) ||
-                    (button == aboutButton && !isAboutActive))   {
+                    (button == aboutButton && !isAboutActive) ||
+                    (button == logoutButton && !isLogoutActive)){
                         button.setBackground(defaultColor);
                 }
             }
@@ -407,6 +416,8 @@ public class MainView extends javax.swing.JFrame {
 
     private void aboutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutButtonMouseClicked
         // TODO add your handling code here:
+        navigationController.goTo(this, new AboutPanel());
+        setActiveButton(aboutButton);
     }//GEN-LAST:event_aboutButtonMouseClicked
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked

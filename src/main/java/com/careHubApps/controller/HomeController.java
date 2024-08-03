@@ -1,10 +1,14 @@
 package main.java.com.careHubApps.controller;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import main.java.com.careHubApps.DatabaseConnection;
-import main.java.com.careHubApps.helper.SessionManager;
+import main.java.com.careHubApps.model.AntrianModel;
 import main.java.com.careHubApps.model.UserModel;
 
 public class HomeController {
@@ -42,14 +46,27 @@ public class HomeController {
                 jumlahPasien = rs.getInt("total");
             }
             
-            rs.close();
-            stmt.close();
-            conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return jumlahPasien;
     }
-    
+
+    public int hitungAntrian() {
+        int jumlahAntrian = 0;
+        try {
+            Connection conn = dbConnection.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS total FROM antrian");
+            
+            if (rs.next()) {
+                jumlahAntrian = rs.getInt("total");
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jumlahAntrian;
+    }
     
 }

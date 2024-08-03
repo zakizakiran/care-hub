@@ -1,28 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package main.java.com.careHubApps.view;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.List;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import main.java.com.careHubApps.controller.AntrianController;
 import main.java.com.careHubApps.controller.AuthController;
 import main.java.com.careHubApps.controller.HomeController;
 import main.java.com.careHubApps.controller.NavigationController;
-import main.java.com.careHubApps.model.UserModel;
+import main.java.com.careHubApps.model.AntrianModel;
 import resources.components.ShadowPanel;
 import resources.components.RoundedPanel;
+import resources.components.ScrollBarCustom;
 
 /**
  *
  * @author ASUS
  */
-public class HomePanel extends javax.swing.JPanel {
+public final class HomePanel extends javax.swing.JPanel {
     
     NavigationController navigationController;
     AuthController authController;
+    AntrianController antrianController;
     HomeController homeController;
     MainView mainView;
     LoginView loginView;
@@ -36,18 +39,25 @@ public class HomePanel extends javax.swing.JPanel {
         
         navigationController = new NavigationController();
         homeController = new HomeController();
+        antrianController = new AntrianController();
         
         String nama = HomeController.getCurrentUser().getName();
+        
+        setupHoverEffect(lihatAntrianButton, Color.BLACK, Color.decode("#508D4E"));
+        setupHoverEffect(refreshButton, Color.GRAY, Color.decode("#508D4E"));
+        
+        ScrollBarCustom sb = new ScrollBarCustom();
+        jScrollPane1.setVerticalScrollBar(sb);
         
         try {
             File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
             File poppinsSemiBold = new File("src/resources/assets/fonts/Poppins-SemiBold.ttf");
-            File poppinsBold = new File("src/resources/assets/fonts/Poppins-Bold.ttf");
 
             Font greetTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(16f);
             Font dashboardTitleTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(20f);
 
             Font cardTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(14f);
+            Font buttonTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(12f);
             Font cardNumberTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(32f);
 
             labelGreetings.setFont(greetTxtStyle);
@@ -62,12 +72,16 @@ public class HomePanel extends javax.swing.JPanel {
             labelTitleAntrian.setFont(dashboardTitleTxtStyle);
 
             labelNama.setFont(cardTxtStyle);
+            
+            labelAntrianButton.setFont(buttonTxtStyle);
          
                
             DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
             headerRenderer.setBackground(Color.decode("#508D4E"));
             headerRenderer.setForeground(Color.WHITE);
             headerRenderer.setFont(cardTxtStyle);
+            
+            tabelAntrian.setFont(cardTxtStyle);
 
             for (int i = 0; i < tabelAntrian.getColumnModel().getColumnCount(); i++) {
                 tabelAntrian.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
@@ -85,6 +99,8 @@ public class HomePanel extends javax.swing.JPanel {
         
         labelNama.setText(nama);
         updateJumlahPasien();
+        updateJumlahAntrian();
+        loadAntrianData();
 
 }
 
@@ -121,6 +137,10 @@ public class HomePanel extends javax.swing.JPanel {
         panelTabelAntrian = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelAntrian = new javax.swing.JTable();
+        lihatAntrianButton = new RoundedPanel(8, Color.decode("#508D4E"));
+        labelAntrianButton = new javax.swing.JLabel();
+        refreshButton = new RoundedPanel(8, Color.decode("#508D4E"));
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1080, 720));
@@ -273,16 +293,16 @@ public class HomePanel extends javax.swing.JPanel {
 
         panelTabelAntrian.setLayout(new java.awt.CardLayout());
 
-        tabelAntrian.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        tabelAntrian.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelAntrian.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "No", "Kode ", "Waktu", "Nama", "Ruang"
+                "No", "ID Antrian", "ID Pasien", "Nama", "Waktu", "Dokter", "Ruang"
             }
         ));
         tabelAntrian.setFocusable(false);
@@ -300,15 +320,103 @@ public class HomePanel extends javax.swing.JPanel {
 
         cardDashboardAntrian.add(panelTabelAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 920, 240));
 
+        lihatAntrianButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lihatAntrianButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lihatAntrianButtonMouseClicked(evt);
+            }
+        });
+
+        labelAntrianButton.setForeground(new java.awt.Color(255, 255, 255));
+        labelAntrianButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelAntrianButton.setText("Lihat Antrian");
+
+        javax.swing.GroupLayout lihatAntrianButtonLayout = new javax.swing.GroupLayout(lihatAntrianButton);
+        lihatAntrianButton.setLayout(lihatAntrianButtonLayout);
+        lihatAntrianButtonLayout.setHorizontalGroup(
+            lihatAntrianButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labelAntrianButton, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+        );
+        lihatAntrianButtonLayout.setVerticalGroup(
+            lihatAntrianButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labelAntrianButton, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+        );
+
+        cardDashboardAntrian.add(lihatAntrianButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 10, 120, 30));
+
+        refreshButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refreshButtonMouseClicked(evt);
+            }
+        });
+        refreshButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/refresh_icon.png"))); // NOI18N
+        refreshButton.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 30, 30));
+
+        cardDashboardAntrian.add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 10, 30, 30));
+
         mainPanel.add(cardDashboardAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 990, 320));
 
         add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
+    private void lihatAntrianButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lihatAntrianButtonMouseClicked
+        // TODO add your handling code here:
+        AntrianView antrianView = new AntrianView();
+        antrianView.setVisible(true);
+    }//GEN-LAST:event_lihatAntrianButtonMouseClicked
 
+    private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
+        // TODO add your handling code here:
+        loadAntrianData();
+        updateJumlahAntrian();
+    }//GEN-LAST:event_refreshButtonMouseClicked
+
+
+    private void setupHoverEffect(JPanel button, Color defaultColor, Color hoverColor) {
+        button.setBackground(defaultColor);
+
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(hoverColor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(defaultColor);
+            }
+        });
+    }
+    
     private void updateJumlahPasien() {
         int jumlahPasien = homeController.hitungPasien();
         labelNumberPasien.setText(String.valueOf(jumlahPasien));
+    }
+
+    public void updateJumlahAntrian() {
+        int jumlahAntrian = homeController.hitungAntrian();
+        labelNumberAntrian.setText(String.valueOf(jumlahAntrian));
+    }
+    
+    public void loadAntrianData() {
+        List<AntrianModel> antrianList = antrianController.getAllAntrian();
+        DefaultTableModel model = (DefaultTableModel) tabelAntrian.getModel();
+        model.setRowCount(0); // Clear existing rows
+        antrianList.forEach((antrian) -> {
+            model.addRow(new Object[]{
+                model.getRowCount() + 1,
+                antrian.getId(),
+                antrian.getId_pasien(),
+                antrian.getNama(),
+                antrian.getWaktu(),
+                antrian.getDokter(),
+                antrian.getRuang()
+            });
+        });
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -320,7 +428,9 @@ public class HomePanel extends javax.swing.JPanel {
     private javax.swing.JPanel doterCard;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelAntrianButton;
     private javax.swing.JLabel labelCardAntrian;
     private javax.swing.JLabel labelCardDokter;
     private javax.swing.JLabel labelCardPasien;
@@ -331,10 +441,12 @@ public class HomePanel extends javax.swing.JPanel {
     private javax.swing.JLabel labelNumberDokter;
     private javax.swing.JLabel labelNumberPasien;
     private javax.swing.JLabel labelTitleAntrian;
+    private javax.swing.JPanel lihatAntrianButton;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel panelTabelAntrian;
     private javax.swing.JPanel pasienCard;
     private javax.swing.JLabel pasienIcon;
+    private javax.swing.JPanel refreshButton;
     private javax.swing.JTable tabelAntrian;
     // End of variables declaration//GEN-END:variables
 }
