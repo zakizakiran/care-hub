@@ -1,25 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package main.java.com.careHubApps.view;
+import main.java.com.careHubApps.view.antrian.AntrianView;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.List;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import main.java.com.careHubApps.controller.AntrianController;
+import main.java.com.careHubApps.controller.AuthController;
+import main.java.com.careHubApps.controller.HomeController;
 import main.java.com.careHubApps.controller.NavigationController;
+import main.java.com.careHubApps.model.AntrianModel;
 import resources.components.ShadowPanel;
 import resources.components.RoundedPanel;
+import resources.components.ScrollBarCustom;
 
 /**
  *
  * @author ASUS
  */
-public class HomePanel extends javax.swing.JPanel {
+public final class HomePanel extends javax.swing.JPanel {
     
     NavigationController navigationController;
+    AuthController authController;
+    AntrianController antrianController;
+    HomeController homeController;
     MainView mainView;
+    LoginView loginView;
 
     /**
      * Creates new form HomePanel
@@ -29,49 +39,70 @@ public class HomePanel extends javax.swing.JPanel {
         initComponents();
         
         navigationController = new NavigationController();
+        homeController = new HomeController();
+        antrianController = new AntrianController();
+        
+        String nama = HomeController.getCurrentUser().getName();
+        
+        setupHoverEffect(lihatAntrianButton, Color.BLACK, Color.decode("#508D4E"));
+        setupHoverEffect(refreshButton, Color.GRAY, Color.decode("#508D4E"));
+        
+        ScrollBarCustom sb = new ScrollBarCustom();
+        jScrollPane1.setVerticalScrollBar(sb);
         
         try {
-         File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
-         File poppinsSemiBold = new File("src/resources/assets/fonts/Poppins-SemiBold.ttf");
-         File poppinsBold = new File("src/resources/assets/fonts/Poppins-Bold.ttf");
+            File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
+            File poppinsSemiBold = new File("src/resources/assets/fonts/Poppins-SemiBold.ttf");
 
-         Font greetTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(16f);
-         Font dashboardTitleTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(20f);
-         
-         Font cardTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(14f);
-         Font cardNumberTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(32f);
+            Font greetTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(16f);
+            Font dashboardTitleTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(20f);
 
-         labelGreetings.setFont(greetTxtStyle);
-         labelDashboard.setFont(dashboardTitleTxtStyle);
-         
-         labelCardDokter.setFont(cardTxtStyle);
-         labelNumberDokter.setFont(cardNumberTxtStyle);
-         
-         labelCardPasien.setFont(cardTxtStyle);
-         mainPanel.setFont(cardNumberTxtStyle);
-         
-         labelCardAntrian.setFont(cardTxtStyle);
-         labelTitleAntrian.setFont(dashboardTitleTxtStyle);
+            Font cardTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(14f);
+            Font buttonTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(12f);
+            Font cardNumberTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(32f);
+
+            labelGreetings.setFont(greetTxtStyle);
+            labelDashboard.setFont(dashboardTitleTxtStyle);
+
+            labelCardDokter.setFont(cardTxtStyle);
+            labelNumberDokter.setFont(cardNumberTxtStyle);
+
+            labelCardPasien.setFont(cardTxtStyle);
+
+            labelCardAntrian.setFont(cardTxtStyle);
+            labelTitleAntrian.setFont(dashboardTitleTxtStyle);
+
+            labelNama.setFont(cardTxtStyle);
+            
+            labelAntrianButton.setFont(buttonTxtStyle);
          
                
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setBackground(Color.decode("#508D4E"));
-        headerRenderer.setForeground(Color.WHITE);
-        headerRenderer.setFont(cardTxtStyle);
+            DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+            headerRenderer.setBackground(Color.decode("#508D4E"));
+            headerRenderer.setForeground(Color.WHITE);
+            headerRenderer.setFont(cardTxtStyle);
+            
+            tabelAntrian.setFont(cardTxtStyle);
 
-        for (int i = 0; i < tabelAntrian.getColumnModel().getColumnCount(); i++) {
-            tabelAntrian.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
-        }
+            for (int i = 0; i < tabelAntrian.getColumnModel().getColumnCount(); i++) {
+                tabelAntrian.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+            }
 
-        // Validate and repaint the header
-        tabelAntrian.getTableHeader().revalidate();
-        tabelAntrian.getTableHeader().repaint();
+            // Validate and repaint the header
+            tabelAntrian.getTableHeader().revalidate();
+            tabelAntrian.getTableHeader().repaint();
 
 
-     } catch (Exception e) {
-         e.printStackTrace();
+     }  catch (Exception e) {
+            e.printStackTrace();
 
      }
+        
+        labelNama.setText(nama);
+        updateJumlahPasien();
+        updateJumlahAntrian();
+        updateJumlahDokter();
+        loadAntrianData();
 
 }
 
@@ -85,27 +116,33 @@ public class HomePanel extends javax.swing.JPanel {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        headerPanel = new ShadowPanel(4, Color.decode("#DFDFDF"));
+        headerPanel = new ShadowPanel(6, Color.decode("#DFDFDF"));
         labelGreetings = new javax.swing.JLabel();
-        cardDashboard = new ShadowPanel(4, Color.decode("#DFDFDF"));
+        labelNama = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        cardDashboard = new ShadowPanel(6, Color.decode("#DFDFDF"));
         labelDashboard = new javax.swing.JLabel();
-        pasienCard = new RoundedPanel(12, Color.decode("#D6EFD8"));
+        pasienCard = new RoundedPanel(16, Color.decode("#D6EFD8"));
         pasienIcon = new javax.swing.JLabel();
         labelCardPasien = new javax.swing.JLabel();
         labelNumberPasien = new javax.swing.JLabel();
-        antrianCard = new RoundedPanel(12, Color.decode("#D6EFD8"));
+        antrianCard = new RoundedPanel(16, Color.decode("#D6EFD8"));
         antrianIcon = new javax.swing.JLabel();
         labelCardAntrian = new javax.swing.JLabel();
         labelNumberAntrian = new javax.swing.JLabel();
-        doterCard = new RoundedPanel(12, Color.decode("#D6EFD8"));
+        doterCard = new RoundedPanel(16, Color.decode("#D6EFD8"));
         dokterIcon = new javax.swing.JLabel();
         labelCardDokter = new javax.swing.JLabel();
         labelNumberDokter = new javax.swing.JLabel();
-        cardDashboardAntrian = new ShadowPanel(4, Color.decode("#DFDFDF"));
+        cardDashboardAntrian = new ShadowPanel(6, Color.decode("#DFDFDF"));
         labelTitleAntrian = new javax.swing.JLabel();
         panelTabelAntrian = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelAntrian = new javax.swing.JTable();
+        lihatAntrianButton = new RoundedPanel(8, Color.decode("#508D4E"));
+        labelAntrianButton = new javax.swing.JLabel();
+        refreshButton = new RoundedPanel(8, Color.decode("#508D4E"));
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1080, 720));
@@ -122,24 +159,39 @@ public class HomePanel extends javax.swing.JPanel {
         labelGreetings.setText("Halo, CareMin!");
         labelGreetings.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
+        labelNama.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        labelNama.setText("Anonymous");
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/default_profile.png"))); // NOI18N
+
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
         headerPanelLayout.setHorizontalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(27, 27, 27)
                 .addComponent(labelGreetings)
-                .addContainerGap(838, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 647, Short.MAX_VALUE)
+                .addComponent(labelNama, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18))
         );
         headerPanelLayout.setVerticalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelGreetings)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelNama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(headerPanelLayout.createSequentialGroup()
+                        .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(labelGreetings, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
-        mainPanel.add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 990, 50));
+        mainPanel.add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 990, 60));
 
         cardDashboard.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -159,8 +211,10 @@ public class HomePanel extends javax.swing.JPanel {
 
         labelNumberPasien.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
         labelNumberPasien.setForeground(Color.decode("#80AF81"));
-        labelNumberPasien.setText("20");
-        pasienCard.add(labelNumberPasien, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+        labelNumberPasien.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        labelNumberPasien.setText("0");
+        labelNumberPasien.setPreferredSize(new java.awt.Dimension(34, 39));
+        pasienCard.add(labelNumberPasien, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 50, -1));
 
         antrianCard.setPreferredSize(new java.awt.Dimension(250, 120));
         antrianCard.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -175,7 +229,9 @@ public class HomePanel extends javax.swing.JPanel {
 
         labelNumberAntrian.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
         labelNumberAntrian.setForeground(Color.decode("#80AF81"));
-        labelNumberAntrian.setText("20");
+        labelNumberAntrian.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        labelNumberAntrian.setText("0");
+        labelNumberAntrian.setPreferredSize(new java.awt.Dimension(34, 39));
         antrianCard.add(labelNumberAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
         doterCard.setPreferredSize(new java.awt.Dimension(250, 120));
@@ -191,8 +247,11 @@ public class HomePanel extends javax.swing.JPanel {
 
         labelNumberDokter.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
         labelNumberDokter.setForeground(Color.decode("#80AF81"));
-        labelNumberDokter.setText("20");
-        doterCard.add(labelNumberDokter, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+        labelNumberDokter.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        labelNumberDokter.setText("0");
+        labelNumberDokter.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        labelNumberDokter.setPreferredSize(new java.awt.Dimension(34, 39));
+        doterCard.add(labelNumberDokter, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 20, 40, -1));
 
         javax.swing.GroupLayout cardDashboardLayout = new javax.swing.GroupLayout(cardDashboard);
         cardDashboard.setLayout(cardDashboardLayout);
@@ -216,13 +275,13 @@ public class HomePanel extends javax.swing.JPanel {
             cardDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardDashboardLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelDashboard)
-                .addGap(31, 31, 31)
+                .addComponent(labelDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(cardDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pasienCard, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(antrianCard, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                    .addComponent(doterCard, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                    .addComponent(antrianCard, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(doterCard, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         mainPanel.add(cardDashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 990, 210));
@@ -232,20 +291,20 @@ public class HomePanel extends javax.swing.JPanel {
 
         labelTitleAntrian.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelTitleAntrian.setText("Antrian Pasien");
-        cardDashboardAntrian.add(labelTitleAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+        cardDashboardAntrian.add(labelTitleAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, 40));
 
         panelTabelAntrian.setLayout(new java.awt.CardLayout());
 
-        tabelAntrian.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        tabelAntrian.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelAntrian.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No", "Kode ", "Waktu", "Nama", "Ruang"
+                "No", "ID Antrian", "ID Pasien", "Nama", "Waktu", "Layanan", "Dokter", "Ruang"
             }
         ));
         tabelAntrian.setFocusable(false);
@@ -261,14 +320,112 @@ public class HomePanel extends javax.swing.JPanel {
 
         panelTabelAntrian.add(jScrollPane1, "card2");
 
-        cardDashboardAntrian.add(panelTabelAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 940, 240));
+        cardDashboardAntrian.add(panelTabelAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 920, 240));
+
+        lihatAntrianButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lihatAntrianButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lihatAntrianButtonMouseClicked(evt);
+            }
+        });
+
+        labelAntrianButton.setForeground(new java.awt.Color(255, 255, 255));
+        labelAntrianButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelAntrianButton.setText("Lihat Antrian");
+
+        javax.swing.GroupLayout lihatAntrianButtonLayout = new javax.swing.GroupLayout(lihatAntrianButton);
+        lihatAntrianButton.setLayout(lihatAntrianButtonLayout);
+        lihatAntrianButtonLayout.setHorizontalGroup(
+            lihatAntrianButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labelAntrianButton, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+        );
+        lihatAntrianButtonLayout.setVerticalGroup(
+            lihatAntrianButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(labelAntrianButton, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+        );
+
+        cardDashboardAntrian.add(lihatAntrianButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 20, 120, 30));
+
+        refreshButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refreshButtonMouseClicked(evt);
+            }
+        });
+        refreshButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/refresh_icon.png"))); // NOI18N
+        refreshButton.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 30, 30));
+
+        cardDashboardAntrian.add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 20, 30, 30));
 
         mainPanel.add(cardDashboardAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 990, 320));
 
         add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
+    private void lihatAntrianButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lihatAntrianButtonMouseClicked
+        // TODO add your handling code here:
+        AntrianView antrianView = new AntrianView();
+        antrianView.setVisible(true);
+    }//GEN-LAST:event_lihatAntrianButtonMouseClicked
 
+    private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
+        // TODO add your handling code here:
+        loadAntrianData();
+        updateJumlahAntrian();
+    }//GEN-LAST:event_refreshButtonMouseClicked
+
+
+    private void setupHoverEffect(JPanel button, Color defaultColor, Color hoverColor) {
+        button.setBackground(defaultColor);
+
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(hoverColor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(defaultColor);
+            }
+        });
+    }
+    
+    private void updateJumlahPasien() {
+        int jumlahPasien = homeController.hitungPasien();
+        labelNumberPasien.setText(String.valueOf(jumlahPasien));
+    }
+
+    public void updateJumlahAntrian() {
+        int jumlahAntrian = homeController.hitungAntrian();
+        labelNumberAntrian.setText(String.valueOf(jumlahAntrian));
+    }
+
+    public void updateJumlahDokter() {
+        int jumlahDokter = homeController.hitungDokter();
+        labelNumberDokter.setText(String.valueOf(jumlahDokter));
+    }
+    
+    public void loadAntrianData() {
+        List<AntrianModel> antrianList = antrianController.getAllAntrian();
+        DefaultTableModel model = (DefaultTableModel) tabelAntrian.getModel();
+        model.setRowCount(0); // Clear existing rows
+        antrianList.forEach((antrian) -> {
+            model.addRow(new Object[]{
+                model.getRowCount() + 1,
+                antrian.getId(),
+                antrian.getId_pasien(),
+                antrian.getNama(),
+                antrian.getWaktu(),
+                antrian.getLayanan(),
+                antrian.getDokter(),
+                antrian.getRuang()
+            });
+        });
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel antrianCard;
@@ -278,20 +435,26 @@ public class HomePanel extends javax.swing.JPanel {
     private javax.swing.JLabel dokterIcon;
     private javax.swing.JPanel doterCard;
     private javax.swing.JPanel headerPanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelAntrianButton;
     private javax.swing.JLabel labelCardAntrian;
     private javax.swing.JLabel labelCardDokter;
     private javax.swing.JLabel labelCardPasien;
     private javax.swing.JLabel labelDashboard;
     private javax.swing.JLabel labelGreetings;
+    private javax.swing.JLabel labelNama;
     private javax.swing.JLabel labelNumberAntrian;
     private javax.swing.JLabel labelNumberDokter;
     private javax.swing.JLabel labelNumberPasien;
     private javax.swing.JLabel labelTitleAntrian;
+    private javax.swing.JPanel lihatAntrianButton;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel panelTabelAntrian;
     private javax.swing.JPanel pasienCard;
     private javax.swing.JLabel pasienIcon;
+    private javax.swing.JPanel refreshButton;
     private javax.swing.JTable tabelAntrian;
     // End of variables declaration//GEN-END:variables
 }

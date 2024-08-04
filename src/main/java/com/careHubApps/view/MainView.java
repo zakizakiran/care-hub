@@ -5,6 +5,10 @@
  */
 package main.java.com.careHubApps.view;
 
+import main.java.com.careHubApps.view.pasien.DaftarPanel;
+import main.java.com.careHubApps.view.dokter.DokterPanel;
+import main.java.com.careHubApps.view.obat.ObatPanel;
+import main.java.com.careHubApps.view.pasien.PasienPanel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -15,7 +19,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import main.java.com.careHubApps.controller.AuthController;
 import main.java.com.careHubApps.controller.NavigationController;
+import main.java.com.careHubApps.model.UserModel;
 import resources.components.RoundedPanel;
 
 /**
@@ -23,17 +29,25 @@ import resources.components.RoundedPanel;
  * @author ASUS
  */
 public class MainView extends javax.swing.JFrame {
+    
     NavigationController navigationController;
+    AuthController authController;
+    UserModel userModel;
+    
     
     // Inisialisasi variabel warna
     String primaryColor = "#1A5319";
     String secondaryColor = "#80AF81";
+    String dangerColor = "#F53F3F";
+    String altColor = "#ABABAB";
     
     private boolean isHomeActive = false;
     private boolean isDaftarActive = false;
     private boolean isPasienActive = false;
     private boolean isDokterActive = false;
     private boolean isObatActive = false;
+    private boolean isAboutActive = false;
+    private boolean isLogoutActive = false;
 
     
     /**
@@ -43,12 +57,15 @@ public class MainView extends javax.swing.JFrame {
         initComponents();
         
         navigationController = new NavigationController();
+        authController = new AuthController();
         
         setupHoverEffect(daftarButton, Color.decode(secondaryColor), Color.decode(primaryColor));
         setupHoverEffect(homeButton, Color.decode(secondaryColor), Color.decode(primaryColor));
         setupHoverEffect(pasienButton, Color.decode(secondaryColor), Color.decode(primaryColor));
         setupHoverEffect(dokterButton, Color.decode(secondaryColor), Color.decode(primaryColor));
         setupHoverEffect(obatButton, Color.decode(secondaryColor), Color.decode(primaryColor));
+        setupHoverEffect(aboutButton, Color.decode(secondaryColor), Color.decode(primaryColor));
+        setupHoverEffect(logoutButton, Color.decode(altColor), Color.decode(dangerColor));
         
         try {
             File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
@@ -62,6 +79,8 @@ public class MainView extends javax.swing.JFrame {
             labelPasien.setFont(menuButtonStyle);
             labelDokter.setFont(menuButtonStyle);
             labelObat.setFont(menuButtonStyle);
+            labelAboutUs.setFont(menuButtonStyle);
+            labelLogout.setFont(menuButtonStyle);
             
             
         } catch (Exception e) {
@@ -97,12 +116,16 @@ public class MainView extends javax.swing.JFrame {
         labelDokter = new javax.swing.JLabel();
         obatButton = new RoundedPanel(8, Color.decode("#80AF81"));
         labelObat = new javax.swing.JLabel();
+        aboutButton = new RoundedPanel(8, Color.decode("#80AF81"));
+        labelAboutUs = new javax.swing.JLabel();
+        logoutButton = new RoundedPanel(8, Color.decode("#F53F3F"));
+        labelLogout = new javax.swing.JLabel();
         bodyPanel = new javax.swing.JPanel();
         contentPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CareHub");
-        setPreferredSize(new java.awt.Dimension(1336, 1080));
+        setPreferredSize(new java.awt.Dimension(1336, 720));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -227,12 +250,54 @@ public class MainView extends javax.swing.JFrame {
 
         sideBarPanel.add(obatButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 190, -1));
 
+        aboutButton.setBackground(Color.decode("#508D4E")
+        );
+        aboutButton.setForeground(Color.decode("#508D4E"));
+        aboutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        aboutButton.setPreferredSize(new java.awt.Dimension(190, 52));
+        aboutButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                aboutButtonMouseClicked(evt);
+            }
+        });
+        aboutButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        labelAboutUs.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelAboutUs.setForeground(new java.awt.Color(255, 255, 255));
+        labelAboutUs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/info_icon.png"))); // NOI18N
+        labelAboutUs.setText("About Us");
+        labelAboutUs.setIconTextGap(28);
+        aboutButton.add(labelAboutUs, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 150, 50));
+
+        sideBarPanel.add(aboutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 190, -1));
+
+        logoutButton.setBackground(Color.decode("#508D4E")
+        );
+        logoutButton.setForeground(Color.decode("#508D4E"));
+        logoutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        logoutButton.setPreferredSize(new java.awt.Dimension(190, 52));
+        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseClicked(evt);
+            }
+        });
+        logoutButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        labelLogout.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelLogout.setForeground(new java.awt.Color(255, 255, 255));
+        labelLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/logout_icon.png"))); // NOI18N
+        labelLogout.setText("Logout");
+        labelLogout.setIconTextGap(28);
+        logoutButton.add(labelLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 150, 50));
+
+        sideBarPanel.add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 620, 190, -1));
+
         mainPanel.add(sideBarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         bodyPanel.setPreferredSize(new java.awt.Dimension(1040, 1080));
         bodyPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        contentPanel.setPreferredSize(new java.awt.Dimension(1040, 1080));
+        contentPanel.setPreferredSize(new java.awt.Dimension(1040, 720));
         contentPanel.setLayout(new java.awt.BorderLayout());
         bodyPanel.add(contentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, -1));
 
@@ -266,8 +331,9 @@ public class MainView extends javax.swing.JFrame {
         isPasienActive = activeButton == pasienButton;
         isDokterActive = activeButton == dokterButton;
         isObatActive = activeButton == obatButton;
+        isAboutActive = activeButton == aboutButton;
 
-        JPanel[] buttons = {homeButton, daftarButton, pasienButton, dokterButton, obatButton};
+        JPanel[] buttons = {homeButton, daftarButton, pasienButton, dokterButton, obatButton, aboutButton};
         Color defaultColor = Color.decode("#80AF81");
         Color activeColor = Color.decode("#1A5319");
 
@@ -291,8 +357,10 @@ public class MainView extends javax.swing.JFrame {
                     (button == daftarButton && !isDaftarActive) ||
                     (button == pasienButton && !isPasienActive) ||
                     (button == dokterButton && !isDokterActive)||
-                    (button == obatButton && !isObatActive)) {
-                    button.setBackground(hoverColor);
+                    (button == obatButton && !isObatActive) ||
+                    (button == aboutButton && !isAboutActive)||
+                    (button == logoutButton && !isLogoutActive)) {
+                        button.setBackground(hoverColor);
                 }
             }
 
@@ -302,8 +370,10 @@ public class MainView extends javax.swing.JFrame {
                     (button == daftarButton && !isDaftarActive) ||
                     (button == pasienButton && !isPasienActive) ||
                     (button == dokterButton && !isDokterActive) ||
-                    (button == obatButton && !isObatActive))   {
-                    button.setBackground(defaultColor);
+                    (button == obatButton && !isObatActive) ||
+                    (button == aboutButton && !isAboutActive) ||
+                    (button == logoutButton && !isLogoutActive)){
+                        button.setBackground(defaultColor);
                 }
             }
         });
@@ -346,6 +416,17 @@ public class MainView extends javax.swing.JFrame {
         setActiveButton(obatButton);
     }//GEN-LAST:event_obatButtonMouseClicked
 
+    private void aboutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutButtonMouseClicked
+        // TODO add your handling code here:
+        navigationController.goTo(this, new AboutPanel());
+        setActiveButton(aboutButton);
+    }//GEN-LAST:event_aboutButtonMouseClicked
+
+    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
+        // TODO add your handling code here:
+        authController.logout(userModel, this);
+    }//GEN-LAST:event_logoutButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -383,16 +464,20 @@ public class MainView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel aboutButton;
     private javax.swing.JPanel bodyPanel;
     private javax.swing.JPanel contentPanel;
     private javax.swing.JPanel daftarButton;
     private javax.swing.JPanel dokterButton;
     private javax.swing.JPanel homeButton;
+    private javax.swing.JLabel labelAboutUs;
     private javax.swing.JLabel labelDaftar;
     private javax.swing.JLabel labelDokter;
     private javax.swing.JLabel labelHome;
+    private javax.swing.JLabel labelLogout;
     private javax.swing.JLabel labelObat;
     private javax.swing.JLabel labelPasien;
+    private javax.swing.JPanel logoutButton;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel obatButton;
     private javax.swing.JPanel pasienButton;
