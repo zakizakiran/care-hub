@@ -357,11 +357,13 @@ public final class PasienPanel extends javax.swing.JPanel{
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
         // TODO add your handling code here:
         performSearch();
+        setActiveButton(panelSemua);
     }//GEN-LAST:event_searchButtonMouseClicked
 
     private void searchTxtFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTxtFieldKeyTyped
         // TODO add your handling code here:
         performSearch();
+        setActiveButton(panelSemua);
     }//GEN-LAST:event_searchTxtFieldKeyTyped
 
     private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
@@ -718,6 +720,7 @@ public final class PasienPanel extends javax.swing.JPanel{
 
                         loadDataPasien();
                         updateJumlahPasienPerDokter();
+                        setActiveButton(panelSemua);
                     }
                 }
             });

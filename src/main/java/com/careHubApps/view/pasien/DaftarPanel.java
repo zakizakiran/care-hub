@@ -247,53 +247,59 @@ public class DaftarPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_simpanButtonMouseClicked
 
     private void tambahPasien() {
-        String name = txtFieldNama.getText().trim();
-        String dateOfBirth = txtFieldTglLahir.getText().trim();
-        String phoneNumber = txtFieldHp.getText().trim();
+        String nama = txtFieldNama.getText().trim();
+        String tglLahir = txtFieldTglLahir.getText().trim();
+        String noTelpon = txtFieldHp.getText().trim();
         String email = txtFieldEmail.getText().trim();
 
         // Dapatkan nilai combo box dengan pengecekan null
-        Object genderObj = comboJenKel.getSelectedItem();
-        Object bloodTypeObj = comboGolDarah.getSelectedItem();
-        Object doctorObj = comboDokter.getSelectedItem();
+        Object jenKelObj = comboJenKel.getSelectedItem();
+        Object golDarObj = comboGolDarah.getSelectedItem();
+        Object dokterObj = comboDokter.getSelectedItem();
 
         // Validasi input
-        if (name.isEmpty()) {
+        if (nama.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nama tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (dateOfBirth.isEmpty()) {
+        if (tglLahir.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tanggal lahir tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
-        if (phoneNumber.isEmpty()) {
+        if (noTelpon.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nomor telepon tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (genderObj == null || genderObj.toString().trim().isEmpty()) {
+        
+        if (!noTelpon.matches("\\d{10,12}")) { // Contoh validasi nomor telepon harus angka dan panjang 10-12 digit
+            JOptionPane.showMessageDialog(this, "Nomor telepon harus berupa angka dan panjang 10-12 digit", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (jenKelObj == null || jenKelObj.toString().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Jenis kelamin harus dipilih", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (bloodTypeObj == null || bloodTypeObj.toString().trim().isEmpty()) {
+        if (golDarObj == null || golDarObj.toString().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Golongan darah harus dipilih", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (doctorObj == null || doctorObj.toString().trim().isEmpty()) {
+        if (dokterObj == null || dokterObj.toString().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Dokter harus dipilih", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Konversi nilai combo box ke String setelah validasi null
-        String gender = genderObj.toString().trim();
-        String bloodType = bloodTypeObj.toString().trim();
-        String doctor = doctorObj.toString().trim();
+        String jenKel = jenKelObj.toString().trim();
+        String golDar = golDarObj.toString().trim();
+        String dokter = dokterObj.toString().trim();
 
         // Buat ID unik untuk pasien
         String id = pasienController.generateUniqueId(dbConnection.getConnection());
 
         // Buat model pasien
-        PasienModel pasien = new PasienModel(id, name, dateOfBirth, phoneNumber, email, gender, bloodType, doctor);
+        PasienModel pasien = new PasienModel(id, nama, tglLahir, noTelpon, email, jenKel, golDar, dokter);
 
         // Tambah pasien ke database
         if (pasienController.tambahPasien(pasien)) {
