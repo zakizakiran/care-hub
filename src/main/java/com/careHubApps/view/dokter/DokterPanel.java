@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import main.java.com.careHubApps.controller.DokterController;
 import main.java.com.careHubApps.model.DokterModel;
 import resources.components.CustomTextField;
@@ -29,6 +30,7 @@ public final class DokterPanel extends javax.swing.JPanel {
     DokterController dokterController;
 
     TambahDokterView tambahDokterView;
+    EditDokterView editDokterView;
     
     /**
      * Creates new form HomePanel
@@ -40,6 +42,7 @@ public final class DokterPanel extends javax.swing.JPanel {
 
         ScrollBarCustom sb = new ScrollBarCustom();
         jScrollPane1.setVerticalScrollBar(sb);
+        
         
         tambahDokterView = new TambahDokterView();
 
@@ -90,7 +93,7 @@ public final class DokterPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1020, 720));
-        setPreferredSize(new java.awt.Dimension(1040, 1080));
+        setPreferredSize(new java.awt.Dimension(1040, 720));
         setLayout(new java.awt.CardLayout());
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -191,6 +194,7 @@ public final class DokterPanel extends javax.swing.JPanel {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         bodyPanel.setBackground(new java.awt.Color(255, 255, 255));
+        bodyPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout bodyPanelLayout = new javax.swing.GroupLayout(bodyPanel);
         bodyPanel.setLayout(bodyPanelLayout);
@@ -205,7 +209,7 @@ public final class DokterPanel extends javax.swing.JPanel {
 
         jScrollPane1.setViewportView(bodyPanel);
 
-        mainPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 960, 500));
+        mainPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 960, 550));
 
         add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
@@ -406,7 +410,8 @@ public final class DokterPanel extends javax.swing.JPanel {
                 buttonEdit.addMouseListener(new java.awt.event.MouseAdapter() {
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        // Implementasi aksi untuk edit dokter
+                        editDokterView = new EditDokterView(dokter);
+                        editDokterView.setVisible(true);
                     }
                 });
 

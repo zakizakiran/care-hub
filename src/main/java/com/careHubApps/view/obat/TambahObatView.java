@@ -28,51 +28,49 @@ public class TambahObatView extends javax.swing.JFrame {
 
     ObatController obatController;
     DatabaseConnection dbConnection;
-    
+
     /**
      * Creates new form TambahObatView
      */
     public TambahObatView() {
         initComponents();
-        
+
         obatController = new ObatController();
         dbConnection = new DatabaseConnection();
         comboKategori.setSelectedIndex(-1);
-        
+
         setExtendedState(JFrame.MAXIMIZED_HORIZ);
         setResizable(false);
-        
+
         try {
             File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
             File poppinsSemiBold = new File("src/resources/assets/fonts/Poppins-SemiBold.ttf");
-           
+
             Font titleTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(20f);
             Font labelInputTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(14f);
             Font labelButtonStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(14f);
             Font txtFieldStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(14f);
-            
-            
+
             titleDataObat.setFont(titleTxtStyle);
-            
+
             labelInputNama.setFont(labelInputTxtStyle);
             labelInputStok.setFont(labelInputTxtStyle);
             labelInputHarga.setFont(labelInputTxtStyle);
             labelInputTgl.setFont(labelInputTxtStyle);
-            
+
             txtFieldNamaObat.setFont(txtFieldStyle);
             txtFieldStok.setFont(txtFieldStyle);
             txtFieldTglExp.setFont(txtFieldStyle);
             txtFieldHarga.setFont(txtFieldStyle);
-            
+
             comboKategori.setFont(labelInputTxtStyle);
-            
+
             labelButtonSimpan.setFont(labelButtonStyle);
-            
-            
-        } catch (FontFormatException | IOException e){
+
+        } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
-            
+
     }
 
     /**
@@ -100,6 +98,7 @@ public class TambahObatView extends javax.swing.JFrame {
         simpanButton = new RoundedPanel(12, Color.decode("#508D4E"));
         labelButtonSimpan = new javax.swing.JLabel();
         comboKategori = new ComboBox("Kategori Obat");
+        jLabel7 = new javax.swing.JLabel();
         headerPanel = new ShadowPanel(8, Color.decode("#DFDFDF"));
         titleDataObat = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -120,21 +119,21 @@ public class TambahObatView extends javax.swing.JFrame {
 
         labelInputNama.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelInputNama.setText("Nama Obat");
-        bodyPanel.add(labelInputNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 130, -1));
+        bodyPanel.add(labelInputNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 150, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(204, 0, 0));
         jLabel2.setText("*");
-        bodyPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 10, -1));
+        bodyPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 10, -1));
 
         labelInputTgl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelInputTgl.setText("Expired");
-        bodyPanel.add(labelInputTgl, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 120, 20));
+        bodyPanel.add(labelInputTgl, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 110, 20));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(204, 0, 0));
         jLabel4.setText("*");
-        bodyPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, -1, 10));
+        bodyPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, -1, 10));
 
         txtFieldTglExp.setMargin(new java.awt.Insets(4, 4, 4, 4));
         bodyPanel.add(txtFieldTglExp, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 430, 40));
@@ -146,7 +145,7 @@ public class TambahObatView extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(204, 0, 0));
         jLabel6.setText("*");
-        bodyPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, -1, 10));
+        bodyPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, -1, 10));
 
         txtFieldHarga.setMargin(new java.awt.Insets(4, 4, 4, 4));
         bodyPanel.add(txtFieldHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 190, 40));
@@ -196,6 +195,11 @@ public class TambahObatView extends javax.swing.JFrame {
         });
         bodyPanel.add(comboKategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 420, 40));
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel7.setText("*");
+        bodyPanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, -1, 10));
+
         mainPanel.add(bodyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 500, 540));
 
         headerPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -233,37 +237,78 @@ public class TambahObatView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void simpanButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_simpanButtonMouseClicked
-        // TODO add your handling code here:
         String id = obatController.generateUniqueId(dbConnection.getConnection());
-        String namaObat = txtFieldNamaObat.getText();
-        String kategori = comboKategori.getSelectedItem().toString();
-        String exp = txtFieldTglExp.getText();
-        int harga = Integer.valueOf(txtFieldHarga.getText());
-        int stok = Integer.valueOf(txtFieldStok.getText());
-        
+        String namaObat = txtFieldNamaObat.getText().trim();
+        Object kategoriObj = comboKategori.getSelectedItem(); // Menggunakan Object untuk validasi
+        String exp = txtFieldTglExp.getText().trim();
+        String hargaText = txtFieldHarga.getText().trim();
+        String stokText = txtFieldStok.getText().trim();
+
+        // Validasi data
+        if (namaObat.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nama obat tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (kategoriObj == null || kategoriObj.toString().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Kategori harus dipilih", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (exp.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tanggal kadaluarsa tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (hargaText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Harga tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (stokText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Stok tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int harga;
+        int stok;
+        try {
+            harga = Integer.parseInt(hargaText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Harga harus berupa angka", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            stok = Integer.parseInt(stokText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Stok harus berupa angka", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String kategori = kategoriObj.toString().trim();
+
+        // Buat model obat
         ObatModel obatModel = new ObatModel(id, namaObat, kategori, exp, harga, stok);
-        
+
+        // Tambah obat ke database
         if (obatController.tambahObat(obatModel)) {
             JOptionPane.showMessageDialog(this, "Data obat berhasil disimpan dengan ID: " + id);
             clearInput();
         } else {
-            JOptionPane.showMessageDialog(this, "Gagal menyimpan data pasien");
+            JOptionPane.showMessageDialog(this, "Gagal menyimpan data obat", "Kesalahan", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_simpanButtonMouseClicked
 
     private void comboKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboKategoriActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboKategoriActionPerformed
 
-    private void clearInput(){
+    private void clearInput() {
         txtFieldNamaObat.setText("");
         txtFieldHarga.setText("");
         txtFieldStok.setText("");
         txtFieldTglExp.setText("");
         comboKategori.setSelectedIndex(-1);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -307,6 +352,7 @@ public class TambahObatView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel labelButtonSimpan;
     private javax.swing.JLabel labelInputHarga;
     private javax.swing.JLabel labelInputNama;

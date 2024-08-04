@@ -9,9 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import main.java.com.careHubApps.DatabaseConnection;
 import main.java.com.careHubApps.controller.DokterController;
-import main.java.com.careHubApps.controller.ObatController;
 import main.java.com.careHubApps.model.DokterModel;
-import main.java.com.careHubApps.model.ObatModel;
 import resources.components.ComboBox;
 import resources.components.CustomTextField;
 import resources.components.RoundedPanel;
@@ -26,48 +24,46 @@ public class TambahDokterView extends javax.swing.JFrame {
     DokterController dokterController;
     DatabaseConnection dbConnection;
     DokterModel dokterModel;
-    
+
     /**
      * Creates new form TambahObatView
      */
     public TambahDokterView() {
         initComponents();
-        
+
         dokterController = new DokterController();
         dbConnection = new DatabaseConnection();
 //        dokterModel = new DokterModel(dokterModel.getId(),dokterModel.getNama(), dokterModel.getSpesialis(), dokterModel.getNoTelpon(), dokterModel.getAlamat());
-        
+
         setExtendedState(JFrame.MAXIMIZED_HORIZ);
         setResizable(false);
-        
+
         try {
             File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
             File poppinsSemiBold = new File("src/resources/assets/fonts/Poppins-SemiBold.ttf");
-           
+
             Font titleTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(20f);
             Font labelInputTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(14f);
             Font labelButtonStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(14f);
             Font txtFieldStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(14f);
-            
-            
+
             titleDataObat.setFont(titleTxtStyle);
-            
+
             labelInputNama.setFont(labelInputTxtStyle);
             labelInputStok.setFont(labelInputTxtStyle);
             labelInputHarga.setFont(labelInputTxtStyle);
-            
+
             txtFieldNamaDokter.setFont(txtFieldStyle);
             txtFieldAlamat.setFont(txtFieldStyle);
             comboSpesialis.setFont(labelInputTxtStyle);
             txtFieldTelpon.setFont(txtFieldStyle);
-                        
+
             labelButtonSimpan.setFont(labelButtonStyle);
-            
-            
-        } catch (FontFormatException | IOException e){
+
+        } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
-            
+
     }
 
     /**
@@ -208,30 +204,56 @@ public class TambahDokterView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void simpanButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_simpanButtonMouseClicked
-        // TODO add your handling code here:
         String namaDokter = txtFieldNamaDokter.getText();
-        String spesialis = comboSpesialis.getSelectedItem().toString();
+        Object spesialisObj = comboSpesialis.getSelectedItem();
         String telpon = txtFieldTelpon.getText();
         String alamat = txtFieldAlamat.getText();
-        
-        DokterModel dokterModel = new DokterModel(null, namaDokter, spesialis, telpon, alamat);
-        
+
+        // Validasi input
+        if (namaDokter.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nama dokter tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (spesialisObj == null || spesialisObj.toString().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Spesialis tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String spesialis = spesialisObj.toString();
+
+        if (telpon.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nomor telepon tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!telpon.matches("\\d{10,12}")) { // Contoh validasi nomor telepon harus angka dan panjang 10-12 digit
+            JOptionPane.showMessageDialog(this, "Nomor telepon harus berupa angka dan panjang 10-12 digit", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (alamat.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Alamat tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        dokterModel = new DokterModel(null, namaDokter, spesialis, telpon, alamat);
+
         if (dokterController.tambahDokter(dokterModel)) {
             JOptionPane.showMessageDialog(this, "Data dokter berhasil disimpan dengan ID: " + dokterModel.getId());
             clearInput();
         } else {
-            JOptionPane.showMessageDialog(this, "Gagal menyimpan data pasien");
+            JOptionPane.showMessageDialog(this, "Gagal menyimpan data dokter");
         }
-        
     }//GEN-LAST:event_simpanButtonMouseClicked
 
-    private void clearInput(){
+    private void clearInput() {
         txtFieldNamaDokter.setText("");
         txtFieldTelpon.setText("");
         txtFieldAlamat.setText("");
         comboSpesialis.setSelectedIndex(-1);
     }
-    
+
     /**
      * @param args the command line arguments
      */

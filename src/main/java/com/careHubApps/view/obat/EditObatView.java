@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import main.java.com.careHubApps.DatabaseConnection;
 import main.java.com.careHubApps.controller.ObatController;
 import main.java.com.careHubApps.model.ObatModel;
-import main.java.com.careHubApps.model.PasienModel;
 import resources.components.ComboBox;
 import resources.components.CustomTextField;
 import resources.components.RoundedPanel;
@@ -230,18 +229,51 @@ public class EditObatView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void simpanButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_simpanButtonMouseClicked
-        // TODO add your handling code here:
-        String namaObat = txtFieldNamaObat.getText();
-        String kategori = comboKategori.getSelectedItem().toString();
-        String exp = txtFieldTglExp.getText();
-        int harga = Integer.valueOf(txtFieldHarga.getText());
-        int stok = Integer.valueOf(txtFieldStok.getText());
-        
-        
-//        if (nama.isEmpty() || tglLahir.isEmpty() || noTelpon.isEmpty() || jenisKelamin.isEmpty() || golDarah.isEmpty() || dokter.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Mohon lengkapi semua field!", "Error", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
+        String namaObat = txtFieldNamaObat.getText().trim();
+        Object kategoriObj = comboKategori.getSelectedItem(); // Menggunakan Object untuk validasi
+        String exp = txtFieldTglExp.getText().trim();
+        String hargaText = txtFieldHarga.getText().trim();
+        String stokText = txtFieldStok.getText().trim();
+
+        // Validasi data
+        if (namaObat.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nama obat tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (kategoriObj == null || kategoriObj.toString().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Kategori harus dipilih", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (exp.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tanggal kadaluarsa tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (hargaText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Harga tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (stokText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Stok tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int harga;
+        int stok;
+        try {
+            harga = Integer.parseInt(hargaText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Harga harus berupa angka", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            stok = Integer.parseInt(stokText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Stok harus berupa angka", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String kategori = kategoriObj.toString().trim();
 
         obatModel = new ObatModel(obatModel.getId(), namaObat, kategori, exp, harga, stok);
         boolean isUpdated = obatController.updateObat(obatModel);
@@ -259,13 +291,6 @@ public class EditObatView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_comboKategoriActionPerformed
 
-    private void clearInput(){
-        txtFieldNamaObat.setText("");
-        txtFieldHarga.setText("");
-        txtFieldStok.setText("");
-        txtFieldTglExp.setText("");
-        comboKategori.setSelectedIndex(-1);
-    }
     
     private void loadData(ObatModel obat) {
         txtFieldNamaObat.setText(obat.getNama());

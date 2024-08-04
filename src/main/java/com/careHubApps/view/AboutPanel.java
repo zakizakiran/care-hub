@@ -42,6 +42,13 @@ public class AboutPanel extends javax.swing.JPanel {
             nimFariq.setFont(nimTxtStyle);
             nimTopik.setFont(nimTxtStyle);
             
+            labelKonJaki.setFont(nimTxtStyle);
+            labelKonArdi.setFont(nimTxtStyle);
+            labelKonFariq.setFont(nimTxtStyle);
+            labelKonTopik.setFont(nimTxtStyle);
+            labelKonDms.setFont(nimTxtStyle);
+            
+            
          } catch (FontFormatException | IOException e){
              
          }
@@ -63,22 +70,27 @@ public class AboutPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         nimDimas = new javax.swing.JLabel();
         labelNamaDimas = new javax.swing.JLabel();
+        labelKonDms = new javax.swing.JLabel();
         cardTopik = new ShadowPanel(6, Color.decode("#DFDFDF"));
         jLabel2 = new javax.swing.JLabel();
         nimTopik = new javax.swing.JLabel();
         labelNamaTopik = new javax.swing.JLabel();
+        labelKonTopik = new javax.swing.JLabel();
         cardZaki = new ShadowPanel(6, Color.decode("#DFDFDF"));
         jLabel3 = new javax.swing.JLabel();
         nimZaki = new javax.swing.JLabel();
         labelNamaZaki = new javax.swing.JLabel();
+        labelKonJaki = new javax.swing.JLabel();
         cardFariq = new ShadowPanel(6, Color.decode("#DFDFDF"));
         jLabel10 = new javax.swing.JLabel();
         nimFariq = new javax.swing.JLabel();
         labelNamaFariq = new javax.swing.JLabel();
+        labelKonFariq = new javax.swing.JLabel();
         cardArdi = new ShadowPanel(6, Color.decode("#DFDFDF"));
         jLabel13 = new javax.swing.JLabel();
         nimArdi = new javax.swing.JLabel();
         labelNamaArdi = new javax.swing.JLabel();
+        labelKonArdi = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -116,7 +128,7 @@ public class AboutPanel extends javax.swing.JPanel {
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/dimas.png"))); // NOI18N
-        cardDimas.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 190, 160));
+        cardDimas.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 190, 180));
 
         nimDimas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nimDimas.setText("10123211");
@@ -126,14 +138,18 @@ public class AboutPanel extends javax.swing.JPanel {
         labelNamaDimas.setText("Muhammad Dimas H P");
         cardDimas.add(labelNamaDimas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 190, 30));
 
-        mainPanel.add(cardDimas, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 110, 250, 260));
+        labelKonDms.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelKonDms.setText("Kontribusi : 100%");
+        cardDimas.add(labelKonDms, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, 20));
+
+        mainPanel.add(cardDimas, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 120, 250, 260));
 
         cardTopik.setBackground(new java.awt.Color(255, 255, 255));
         cardTopik.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/topik.png"))); // NOI18N
-        cardTopik.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 190, 160));
+        cardTopik.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 190, 180));
 
         nimTopik.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nimTopik.setText("10123197");
@@ -143,6 +159,10 @@ public class AboutPanel extends javax.swing.JPanel {
         labelNamaTopik.setText("Topik Nur Rahman");
         cardTopik.add(labelNamaTopik, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 190, 30));
 
+        labelKonTopik.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelKonTopik.setText("Kontribusi : 100%");
+        cardTopik.add(labelKonTopik, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, -1, 20));
+
         mainPanel.add(cardTopik, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 400, 250, 260));
 
         cardZaki.setBackground(new java.awt.Color(255, 255, 255));
@@ -150,7 +170,7 @@ public class AboutPanel extends javax.swing.JPanel {
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/zaki.png"))); // NOI18N
-        cardZaki.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 190, 160));
+        cardZaki.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 190, 180));
 
         nimZaki.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nimZaki.setText("10123206");
@@ -160,6 +180,10 @@ public class AboutPanel extends javax.swing.JPanel {
         labelNamaZaki.setText("Mohamad Zaki Zakiran");
         cardZaki.add(labelNamaZaki, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 190, 30));
 
+        labelKonJaki.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelKonJaki.setText("Kontribusi : 100%");
+        cardZaki.add(labelKonJaki, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, 20));
+
         mainPanel.add(cardZaki, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 250, 260));
 
         cardFariq.setBackground(new java.awt.Color(255, 255, 255));
@@ -167,7 +191,7 @@ public class AboutPanel extends javax.swing.JPanel {
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/fariq.png"))); // NOI18N
-        cardFariq.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 190, 160));
+        cardFariq.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 190, 180));
 
         nimFariq.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nimFariq.setText("10123204");
@@ -177,6 +201,10 @@ public class AboutPanel extends javax.swing.JPanel {
         labelNamaFariq.setText("Fariq Daffa");
         cardFariq.add(labelNamaFariq, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 190, 30));
 
+        labelKonFariq.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelKonFariq.setText("Kontribusi : 100%");
+        cardFariq.add(labelKonFariq, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, 20));
+
         mainPanel.add(cardFariq, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, 250, 260));
 
         cardArdi.setBackground(new java.awt.Color(255, 255, 255));
@@ -184,7 +212,7 @@ public class AboutPanel extends javax.swing.JPanel {
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/ardi.png"))); // NOI18N
-        cardArdi.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 190, 160));
+        cardArdi.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 190, 180));
 
         nimArdi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nimArdi.setText("10123195");
@@ -193,6 +221,10 @@ public class AboutPanel extends javax.swing.JPanel {
         labelNamaArdi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelNamaArdi.setText("Ardi Saputra");
         cardArdi.add(labelNamaArdi, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 190, 30));
+
+        labelKonArdi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelKonArdi.setText("Kontribusi : 100%");
+        cardArdi.add(labelKonArdi, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, 20));
 
         mainPanel.add(cardArdi, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 250, 260));
 
@@ -216,6 +248,11 @@ public class AboutPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel labelKonArdi;
+    private javax.swing.JLabel labelKonDms;
+    private javax.swing.JLabel labelKonFariq;
+    private javax.swing.JLabel labelKonJaki;
+    private javax.swing.JLabel labelKonTopik;
     private javax.swing.JLabel labelNamaArdi;
     private javax.swing.JLabel labelNamaDimas;
     private javax.swing.JLabel labelNamaFariq;

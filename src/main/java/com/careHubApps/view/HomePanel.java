@@ -275,13 +275,13 @@ public final class HomePanel extends javax.swing.JPanel {
             cardDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardDashboardLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelDashboard)
-                .addGap(31, 31, 31)
+                .addComponent(labelDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(cardDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pasienCard, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(antrianCard, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                    .addComponent(doterCard, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                    .addComponent(antrianCard, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(doterCard, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         mainPanel.add(cardDashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 990, 210));
@@ -291,7 +291,7 @@ public final class HomePanel extends javax.swing.JPanel {
 
         labelTitleAntrian.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelTitleAntrian.setText("Antrian Pasien");
-        cardDashboardAntrian.add(labelTitleAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+        cardDashboardAntrian.add(labelTitleAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, 40));
 
         panelTabelAntrian.setLayout(new java.awt.CardLayout());
 
@@ -344,7 +344,7 @@ public final class HomePanel extends javax.swing.JPanel {
             .addComponent(labelAntrianButton, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        cardDashboardAntrian.add(lihatAntrianButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 10, 120, 30));
+        cardDashboardAntrian.add(lihatAntrianButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 20, 120, 30));
 
         refreshButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -358,7 +358,7 @@ public final class HomePanel extends javax.swing.JPanel {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/refresh_icon.png"))); // NOI18N
         refreshButton.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 30, 30));
 
-        cardDashboardAntrian.add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 10, 30, 30));
+        cardDashboardAntrian.add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 20, 30, 30));
 
         mainPanel.add(cardDashboardAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 990, 320));
 

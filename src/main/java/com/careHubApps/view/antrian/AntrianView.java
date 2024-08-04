@@ -173,7 +173,7 @@ public final class AntrianView extends javax.swing.JFrame {
         bodyPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jScrollPane2.setViewportView(bodyPanel);
 
-        mainPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 1130, 750));
+        mainPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 1110, 750));
 
         getContentPane().add(mainPanel, "card2");
 
@@ -206,6 +206,7 @@ public final class AntrianView extends javax.swing.JFrame {
                 .filter(q -> q.getNama().toLowerCase().contains(searchText) ||
                         q.getId().toLowerCase().contains(searchText) ||
                         q.getRuang().toLowerCase().contains(searchText) ||
+                        q.getLayanan().toLowerCase().contains(searchText) ||
                         q.getDokter().toLowerCase().contains(searchText))
                 .collect(Collectors.toList());
     
@@ -399,7 +400,7 @@ public final class AntrianView extends javax.swing.JFrame {
                     e.printStackTrace();
                 }
 
-                buttonAntrian.setPreferredSize(new java.awt.Dimension(280, 36));
+                buttonAntrian.setPreferredSize(new java.awt.Dimension(270, 36));
 
                 cardAntrian.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
                 cardAntrian.add(labelId, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));

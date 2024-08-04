@@ -4,9 +4,12 @@
  * and open the template in the editor.
  */
 package main.java.com.careHubApps.view;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -25,18 +28,15 @@ import resources.components.RoundedPanel;
 import resources.components.CustomTextField;
 import resources.components.CustomPasswordField;
 
-
-
-
 /**
  *
  * @author ASUS
  */
 public class LoginView extends javax.swing.JFrame {
-    
+
     MainView mainView;
     AuthController authController;
-    
+
     // Inisialisasi variabel warna
     String primaryColor = "#1A5319";
     String hoverColor = "#00000";
@@ -46,33 +46,31 @@ public class LoginView extends javax.swing.JFrame {
      */
     public LoginView() {
         initComponents();
-        
+
         mainView = new MainView();
         authController = new AuthController();
-        
-         try {
+
+        try {
             File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
             File poppinsSemiBold = new File("src/resources/assets/fonts/Poppins-SemiBold.ttf");
             File poppinsBold = new File("src/resources/assets/fonts/Poppins-Bold.ttf");
-            
+
             Font titleTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(20f);
             Font labelButtonStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(16f);
             Font inputTextStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(14f);
 
             titleCardLogin.setFont(titleTxtStyle);
             labelButtonLogin.setFont(labelButtonStyle);
-            
+
             txtFieldUsername.setFont(inputTextStyle);
             txtFieldPassword.setFont(inputTextStyle);
-            
-            
-            
-         } catch(Exception e){
-             e.printStackTrace();
-         }
-        
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         setupHoverEffect(buttonLogin, Color.decode(primaryColor), Color.decode(hoverColor));
-        
+
         setIconImage();
         this.setExtendedState(JFrame.MAXIMIZED_HORIZ);
         this.setResizable(false);
@@ -158,6 +156,14 @@ public class LoginView extends javax.swing.JFrame {
 
         txtFieldPassword.setMargin(new java.awt.Insets(4, 40, 4, 4));
         txtFieldPassword.setPreferredSize(new java.awt.Dimension(6, 28));
+        txtFieldPassword.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    buttonLoginMouseClicked(null);
+                }
+            }
+        });
         cardLogin.add(txtFieldPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 270, 40));
 
         mainPanel.add(cardLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, 340, 340));
@@ -181,22 +187,32 @@ public class LoginView extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-    private void buttonLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLoginMouseClicked
-        // TODO add your handling code here:
-        String username = txtFieldUsername.getText();
-        String password = new String(txtFieldPassword.getPassword());
 
+    private void buttonLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLoginMouseClicked
+        // Ambil input username dan password
+        String username = txtFieldUsername.getText().trim();
+        String password = new String(txtFieldPassword.getPassword()).trim();
+
+        // Validasi input tidak boleh kosong
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Username dan Password tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Buat model user dengan input yang dimasukkan
         UserModel user = new UserModel(username, password);
 
+        // Coba autentikasi user
         UserModel authenticatedUser = authController.authenticate(user);
+
+        // Cek apakah user berhasil diautentikasi
         if (authenticatedUser != null) {
             HomeController.setUser(authenticatedUser);
-
             mainView.setVisible(true);
-            this.dispose();
+            this.dispose();  // Tutup jendela login
         } else {
-            JOptionPane.showMessageDialog(this, "Login Failed");
+            // Tampilkan pesan kesalahan jika login gagal
+            JOptionPane.showMessageDialog(this, "Login gagal. Username atau Password salah.", "Login Gagal", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_buttonLoginMouseClicked
 
@@ -207,7 +223,7 @@ public class LoginView extends javax.swing.JFrame {
     public JPasswordField getTxFieldtPassword() {
         return txtFieldPassword;
     }
-    
+
     private void setupHoverEffect(JPanel button, Color defaultColor, Color hoverColor) {
         button.setBackground(defaultColor);
 
@@ -223,7 +239,7 @@ public class LoginView extends javax.swing.JFrame {
             }
         });
     }
-    
+
     /**
      * @param args the command line arguments
      */

@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import main.java.com.careHubApps.controller.AntrianController;
+import main.java.com.careHubApps.controller.HomeController;
 import main.java.com.careHubApps.controller.PasienController;
 import main.java.com.careHubApps.model.AntrianModel;
 import resources.components.ShadowPanel;
@@ -38,8 +39,12 @@ public final class PasienPanel extends javax.swing.JPanel{
     AntrianModel antrianModel;
     
     EditPasienView editPasienView;
-
     
+    private boolean isSemuaActive = false;
+    private boolean isGigiActive = false;
+    private boolean isMataActive = false;
+    private boolean isUmumActive = false;
+    private boolean isThtActive = false;
     
     /**
      * Creates new form HomePanel
@@ -57,6 +62,15 @@ public final class PasienPanel extends javax.swing.JPanel{
         setupHoverEffect(searchButton, Color.decode("#508D4E"), Color.BLACK);
         setupHoverEffect(refreshButton, Color.decode("#D9D9D9"), Color.BLACK);
         
+        setupHoverEffectHead(panelSemua, Color.WHITE, Color.decode("#DFDFDF"));
+        setupHoverEffectHead(panelGigi, Color.WHITE, Color.decode("#DFDFDF"));
+        setupHoverEffectHead(panelMata, Color.WHITE, Color.decode("#DFDFDF"));
+        setupHoverEffectHead(panelTHT, Color.WHITE, Color.decode("#DFDFDF"));
+        setupHoverEffectHead(panelUmum, Color.WHITE, Color.decode("#DFDFDF"));
+        
+        setActiveButton(panelSemua);
+        
+        
         try {
             File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
             File poppinsSemiBold = new File("src/resources/assets/fonts/Poppins-SemiBold.ttf");
@@ -69,6 +83,9 @@ public final class PasienPanel extends javax.swing.JPanel{
 
             titleDatPasien.setFont(titleTxtStyle);
             searchTxtField.setFont(searchTxtStyle);
+            
+            labelSemua.setFont(labelTxtStyle);
+            labelNumberSemua.setFont(numberTxtStyle);
             
             labelGigi.setFont(labelTxtStyle);
             labelNumberGigi.setFont(numberTxtStyle);
@@ -122,6 +139,9 @@ public final class PasienPanel extends javax.swing.JPanel{
         panelMata = new ShadowPanel(8, Color.decode("#DFDFDF"));
         labelMata = new javax.swing.JLabel();
         labelNumberMata = new javax.swing.JLabel();
+        panelSemua = new ShadowPanel(8, Color.decode("#DFDFDF"));
+        labelSemua = new javax.swing.JLabel();
+        labelNumberSemua = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1040, 720));
@@ -135,6 +155,11 @@ public final class PasienPanel extends javax.swing.JPanel{
         titleDatPasien.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         titleDatPasien.setText("Data Pasien");
 
+        searchTxtField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchTxtFieldActionPerformed(evt);
+            }
+        });
         searchTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 searchTxtFieldKeyTyped(evt);
@@ -213,127 +238,118 @@ public final class PasienPanel extends javax.swing.JPanel{
         bodyPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jScrollPane2.setViewportView(bodyPanel);
 
-        mainPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 162, 1010, 480));
+        mainPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 172, 1010, 470));
 
         panelGigi.setBackground(new java.awt.Color(255, 255, 255));
+        panelGigi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        panelGigi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelGigiMouseClicked(evt);
+            }
+        });
+        panelGigi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         labelGigi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/tooth_icon.png"))); // NOI18N
         labelGigi.setText("Pasien Gigi");
         labelGigi.setIconTextGap(10);
+        panelGigi.add(labelGigi, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 0, 100, 50));
 
         labelNumberGigi.setForeground(Color.decode("#508D4E")
         );
         labelNumberGigi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelNumberGigi.setText("0");
+        panelGigi.add(labelNumberGigi, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 30, 50));
 
-        javax.swing.GroupLayout panelGigiLayout = new javax.swing.GroupLayout(panelGigi);
-        panelGigi.setLayout(panelGigiLayout);
-        panelGigiLayout.setHorizontalGroup(
-            panelGigiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelGigiLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(labelGigi, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelNumberGigi, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        panelGigiLayout.setVerticalGroup(
-            panelGigiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGigiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(labelGigi, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(labelNumberGigi, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        mainPanel.add(panelGigi, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 170, 50));
+        mainPanel.add(panelGigi, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 170, 60));
 
         panelUmum.setBackground(new java.awt.Color(255, 255, 255));
+        panelUmum.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        panelUmum.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelUmumMouseClicked(evt);
+            }
+        });
+        panelUmum.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         labelUmum.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/stetoscope_icon.png"))); // NOI18N
         labelUmum.setText("Pasien Umum");
         labelUmum.setIconTextGap(10);
+        panelUmum.add(labelUmum, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 0, 120, 50));
 
         labelNumberUmum.setForeground(Color.decode("#508D4E")
         );
         labelNumberUmum.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelNumberUmum.setText("0");
+        panelUmum.add(labelNumberUmum, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 0, 30, 50));
 
-        javax.swing.GroupLayout panelUmumLayout = new javax.swing.GroupLayout(panelUmum);
-        panelUmum.setLayout(panelUmumLayout);
-        panelUmumLayout.setHorizontalGroup(
-            panelUmumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelUmumLayout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
-                .addComponent(labelUmum, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(labelNumberUmum, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        panelUmumLayout.setVerticalGroup(
-            panelUmumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelUmumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(labelUmum, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(labelNumberUmum, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        mainPanel.add(panelUmum, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 210, 50));
+        mainPanel.add(panelUmum, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 100, 210, 60));
 
         panelTHT.setBackground(new java.awt.Color(255, 255, 255));
+        panelTHT.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        panelTHT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelTHTMouseClicked(evt);
+            }
+        });
+        panelTHT.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         labelTHT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/tht_icon.png"))); // NOI18N
         labelTHT.setText("Pasien THT");
         labelTHT.setIconTextGap(10);
+        panelTHT.add(labelTHT, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 110, 50));
 
         labelNumberTHT.setForeground(Color.decode("#508D4E")
         );
         labelNumberTHT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelNumberTHT.setText("0");
+        panelTHT.add(labelNumberTHT, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 30, 50));
 
-        javax.swing.GroupLayout panelTHTLayout = new javax.swing.GroupLayout(panelTHT);
-        panelTHT.setLayout(panelTHTLayout);
-        panelTHTLayout.setHorizontalGroup(
-            panelTHTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelTHTLayout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
-                .addComponent(labelTHT, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelNumberTHT, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        panelTHTLayout.setVerticalGroup(
-            panelTHTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTHTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(labelTHT, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(labelNumberTHT, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        mainPanel.add(panelTHT, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, 180, 50));
+        mainPanel.add(panelTHT, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 180, 60));
 
         panelMata.setBackground(new java.awt.Color(255, 255, 255));
+        panelMata.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        panelMata.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelMataMouseClicked(evt);
+            }
+        });
+        panelMata.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         labelMata.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/eyes_icon.png"))); // NOI18N
         labelMata.setText("Pasien Mata");
         labelMata.setIconTextGap(10);
+        panelMata.add(labelMata, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 120, 50));
 
         labelNumberMata.setForeground(Color.decode("#508D4E")
         );
         labelNumberMata.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelNumberMata.setText("0");
+        panelMata.add(labelNumberMata, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 30, 50));
 
-        javax.swing.GroupLayout panelMataLayout = new javax.swing.GroupLayout(panelMata);
-        panelMata.setLayout(panelMataLayout);
-        panelMataLayout.setHorizontalGroup(
-            panelMataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMataLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(labelMata, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelNumberMata, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        panelMataLayout.setVerticalGroup(
-            panelMataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(labelMata, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(labelNumberMata, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        mainPanel.add(panelMata, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 100, 180, 60));
 
-        mainPanel.add(panelMata, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 100, 190, 50));
+        panelSemua.setBackground(new java.awt.Color(255, 255, 255));
+        panelSemua.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        panelSemua.setPreferredSize(new java.awt.Dimension(200, 50));
+        panelSemua.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelSemuaMouseClicked(evt);
+            }
+        });
+        panelSemua.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        labelSemua.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelSemua.setText("Semua");
+        labelSemua.setIconTextGap(10);
+        panelSemua.add(labelSemua, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 0, 60, 50));
+
+        labelNumberSemua.setForeground(Color.decode("#508D4E")
+        );
+        labelNumberSemua.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelNumberSemua.setText("0");
+        panelSemua.add(labelNumberSemua, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 41, 50));
+
+        mainPanel.add(panelSemua, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 130, 60));
 
         add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
@@ -351,9 +367,113 @@ public final class PasienPanel extends javax.swing.JPanel{
     private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
         // TODO add your handling code here:
         loadDataPasien();
+        setActiveButton(panelSemua);
         updateJumlahPasienPerDokter();
     }//GEN-LAST:event_refreshButtonMouseClicked
 
+    private void panelGigiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelGigiMouseClicked
+        // TODO add your handling code here:
+         List<PasienModel> filteredPatients = pasienList.stream()
+                .filter(p -> p.getLayanan().toLowerCase().contains("gigi"))
+                .collect(Collectors.toList());
+         
+         displayPatients(filteredPatients);
+         
+         setActiveButton(panelGigi);
+    }//GEN-LAST:event_panelGigiMouseClicked
+
+    private void panelUmumMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelUmumMouseClicked
+        // TODO add your handling code here:
+        List<PasienModel> filteredPatients = pasienList.stream()
+                .filter(p -> p.getLayanan().toLowerCase().contains("umum"))
+                .collect(Collectors.toList());
+         
+         displayPatients(filteredPatients);
+         
+         setActiveButton(panelUmum);
+    }//GEN-LAST:event_panelUmumMouseClicked
+
+    private void panelTHTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelTHTMouseClicked
+        // TODO add your handling code here:
+        List<PasienModel> filteredPatients = pasienList.stream()
+                .filter(p -> p.getLayanan().toLowerCase().contains("tht"))
+                .collect(Collectors.toList());
+         
+         displayPatients(filteredPatients);
+         
+         setActiveButton(panelTHT);
+    }//GEN-LAST:event_panelTHTMouseClicked
+
+    private void panelMataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelMataMouseClicked
+        // TODO add your handling code here:
+        List<PasienModel> filteredPatients = pasienList.stream()
+                .filter(p -> p.getLayanan().toLowerCase().contains("mata"))
+                .collect(Collectors.toList());
+         
+         displayPatients(filteredPatients);
+         
+         setActiveButton(panelMata);
+    }//GEN-LAST:event_panelMataMouseClicked
+
+    private void panelSemuaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelSemuaMouseClicked
+        // TODO add your handling code here:
+        loadDataPasien();
+        setActiveButton(panelSemua);
+    }//GEN-LAST:event_panelSemuaMouseClicked
+
+    private void searchTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTxtFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchTxtFieldActionPerformed
+
+    private void setActiveButton(JPanel activeButton) {
+        isSemuaActive = activeButton == panelSemua;
+        isGigiActive = activeButton == panelGigi;
+        isUmumActive = activeButton == panelUmum;
+        isMataActive = activeButton == panelMata;
+        isThtActive = activeButton == panelTHT;
+        
+        
+        JPanel[] buttons = {panelSemua, panelGigi, panelUmum, panelMata, panelTHT};
+        Color defaultColor = Color.decode("#FFFFFF");
+        Color activeColor = Color.decode("#DFDFDF");
+
+        for (JPanel button : buttons) {
+            if (button == activeButton) {
+                button.setBackground(activeColor);
+            } else {
+                button.setBackground(defaultColor);
+            }
+        }
+    }
+    
+    private void setupHoverEffectHead(JPanel button, Color defaultColor, Color hoverColor) {
+        button.setBackground(defaultColor);
+
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if ((button == panelSemua && !isSemuaActive) ||
+                    (button == panelGigi && !isGigiActive) ||
+                    (button == panelMata && !isMataActive) ||
+                    (button == panelTHT && !isThtActive) ||
+                    (button == panelUmum && !isUmumActive)) {
+                        button.setBackground(hoverColor);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if ((button == panelSemua && !isSemuaActive) ||
+                    (button == panelGigi && !isGigiActive) ||
+                    (button == panelMata && !isMataActive) ||
+                    (button == panelTHT && !isThtActive) ||
+                    (button == panelUmum && !isUmumActive)) {
+                        button.setBackground(defaultColor);
+                }
+            }
+        });
+    }
+    
     private void setupHoverEffect(JPanel button, Color defaultColor, Color hoverColor) {
         button.setBackground(defaultColor);
 
@@ -391,6 +511,11 @@ public final class PasienPanel extends javax.swing.JPanel{
                 displayPatients(filteredPatients);
             }
         }   
+        
+        isGigiActive = false;
+        isUmumActive = false;
+        isMataActive = false;
+        isThtActive = false;
     }
     
     private void displayNoDataFound() {
@@ -627,9 +752,9 @@ public final class PasienPanel extends javax.swing.JPanel{
                 e.printStackTrace();
             }
 
-            buttonAntrian.setPreferredSize(new java.awt.Dimension(400, 36));
-            buttonHapus.setPreferredSize(new java.awt.Dimension(400, 36));
-            buttonEdit.setPreferredSize(new java.awt.Dimension(400, 36));
+            buttonAntrian.setPreferredSize(new java.awt.Dimension(390, 36));
+            buttonHapus.setPreferredSize(new java.awt.Dimension(390, 36));
+            buttonEdit.setPreferredSize(new java.awt.Dimension(390, 36));
 
             cardPasien.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
             cardPasien.add(labelId, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
@@ -664,9 +789,12 @@ public final class PasienPanel extends javax.swing.JPanel{
    
      private void updateJumlahPasienPerDokter() {
         Map<String, Integer> jumlahPasienPerDokter = pasienController.getJumlahPasienPerLayanan();
-
-        labelNumberGigi.setText(String.valueOf(jumlahPasienPerDokter.getOrDefault("Dokter Gigi", 0)));
-        labelNumberUmum.setText(String.valueOf(jumlahPasienPerDokter.getOrDefault("Dokter Umum", 0)));
+        
+        HomeController homeController = new HomeController();
+        
+        labelNumberSemua.setText(String.valueOf(homeController.hitungPasien()));
+        labelNumberGigi.setText(String.valueOf(jumlahPasienPerDokter.getOrDefault("Gigi", 0)));
+        labelNumberUmum.setText(String.valueOf(jumlahPasienPerDokter.getOrDefault("Umum", 0)));
         labelNumberTHT.setText(String.valueOf(jumlahPasienPerDokter.getOrDefault("THT", 0)));
         labelNumberMata.setText(String.valueOf(jumlahPasienPerDokter.getOrDefault("Mata", 0)));
     }
@@ -682,13 +810,16 @@ public final class PasienPanel extends javax.swing.JPanel{
     private javax.swing.JLabel labelMata;
     private javax.swing.JLabel labelNumberGigi;
     private javax.swing.JLabel labelNumberMata;
+    private javax.swing.JLabel labelNumberSemua;
     private javax.swing.JLabel labelNumberTHT;
     private javax.swing.JLabel labelNumberUmum;
+    private javax.swing.JLabel labelSemua;
     private javax.swing.JLabel labelTHT;
     private javax.swing.JLabel labelUmum;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel panelGigi;
     private javax.swing.JPanel panelMata;
+    private javax.swing.JPanel panelSemua;
     private javax.swing.JPanel panelTHT;
     private javax.swing.JPanel panelUmum;
     private javax.swing.JPanel refreshButton;

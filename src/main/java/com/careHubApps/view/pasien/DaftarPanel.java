@@ -19,65 +19,63 @@ import main.java.com.careHubApps.DatabaseConnection;
 import main.java.com.careHubApps.controller.PasienController;
 import main.java.com.careHubApps.model.PasienModel;
 import resources.components.ComboBox;
-        
+
 /**
  *
  * @author ASUS
  */
 public class DaftarPanel extends javax.swing.JPanel {
-    
+
     PasienController pasienController;
     DatabaseConnection dbConnection;
-    
+
     // Inisialisasi variabel warna
     String primaryColor = "#1A5319";
     String hoverColor = "#00000";
-    
+
     /**
      * Creates new form HomePanel
      */
     public DaftarPanel() {
         initComponents();
-        
+
         pasienController = new PasienController();
         dbConnection = new DatabaseConnection();
-        
+
         comboGolDarah.setSelectedIndex(-1);
         comboJenKel.setSelectedIndex(-1);
         comboDokter.setSelectedIndex(-1);
-        
+
         try {
             File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
             File poppinsSemiBold = new File("src/resources/assets/fonts/Poppins-SemiBold.ttf");
-           
+
             Font titleTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(20f);
             Font labelInputTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(14f);
             Font labelButtonStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(14f);
             Font txtFieldStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(14f);
-            
-            
+
             titleDaftarPanel.setFont(titleTxtStyle);
-            
+
             labelInputNama.setFont(labelInputTxtStyle);
             labelInputEmail.setFont(labelInputTxtStyle);
             labelInputHP.setFont(labelInputTxtStyle);
             labelInputTgl.setFont(labelInputTxtStyle);
             labelButtonSimpan.setFont(labelButtonStyle);
-            
+
             comboJenKel.setFont(labelButtonStyle);
             comboGolDarah.setFont(labelButtonStyle);
             comboDokter.setFont(labelButtonStyle);
-            
+
             txtFieldNama.setFont(txtFieldStyle);
             txtFieldTglLahir.setFont(txtFieldStyle);
             txtFieldEmail.setFont(txtFieldStyle);
             txtFieldHp.setFont(txtFieldStyle);
-            
-            
-        } catch(Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         setupHoverEffect(simpanButton, Color.decode(primaryColor), Color.decode(hoverColor));
 
     }
@@ -154,16 +152,16 @@ public class DaftarPanel extends javax.swing.JPanel {
         bodyPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtFieldNama.setMargin(new java.awt.Insets(4, 4, 4, 4));
-        bodyPanel.add(txtFieldNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 430, 40));
+        bodyPanel.add(txtFieldNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 430, 40));
 
         labelInputNama.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelInputNama.setText("Nama Lengkap");
-        bodyPanel.add(labelInputNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 130, -1));
+        bodyPanel.add(labelInputNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 130, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(204, 0, 0));
         jLabel2.setText("*");
-        bodyPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 10, -1));
+        bodyPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 10, -1));
 
         labelInputTgl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelInputTgl.setText("Tanggal Lahir");
@@ -230,10 +228,10 @@ public class DaftarPanel extends javax.swing.JPanel {
         bodyPanel.add(simpanButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 420, 40));
 
         comboGolDarah.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "AB", "O", "Tidak Tahu" }));
-        bodyPanel.add(comboGolDarah, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, 210, 40));
+        bodyPanel.add(comboGolDarah, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 210, 40));
 
         comboJenKel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-Laki", "Perempuan" }));
-        bodyPanel.add(comboJenKel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 180, 40));
+        bodyPanel.add(comboJenKel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 180, 40));
 
         comboDokter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Umum", "Gigi", "THT", "Mata" }));
         bodyPanel.add(comboDokter, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 190, 40));
@@ -248,27 +246,64 @@ public class DaftarPanel extends javax.swing.JPanel {
         tambahPasien();
     }//GEN-LAST:event_simpanButtonMouseClicked
 
-    private void tambahPasien(){
-        String name = txtFieldNama.getText();
-        String dateOfBirth = txtFieldTglLahir.getText();
-        String phoneNumber = txtFieldHp.getText();
-        String email = txtFieldEmail.getText();
-        String gender = comboJenKel.getSelectedItem().toString();
-        String bloodType = comboGolDarah.getSelectedItem().toString();
-        String doctor = comboDokter.getSelectedItem().toString();
+    private void tambahPasien() {
+        String name = txtFieldNama.getText().trim();
+        String dateOfBirth = txtFieldTglLahir.getText().trim();
+        String phoneNumber = txtFieldHp.getText().trim();
+        String email = txtFieldEmail.getText().trim();
 
+        // Dapatkan nilai combo box dengan pengecekan null
+        Object genderObj = comboJenKel.getSelectedItem();
+        Object bloodTypeObj = comboGolDarah.getSelectedItem();
+        Object doctorObj = comboDokter.getSelectedItem();
+
+        // Validasi input
+        if (name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nama tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (dateOfBirth.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tanggal lahir tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (phoneNumber.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nomor telepon tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (genderObj == null || genderObj.toString().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Jenis kelamin harus dipilih", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (bloodTypeObj == null || bloodTypeObj.toString().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Golongan darah harus dipilih", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (doctorObj == null || doctorObj.toString().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Dokter harus dipilih", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Konversi nilai combo box ke String setelah validasi null
+        String gender = genderObj.toString().trim();
+        String bloodType = bloodTypeObj.toString().trim();
+        String doctor = doctorObj.toString().trim();
+
+        // Buat ID unik untuk pasien
         String id = pasienController.generateUniqueId(dbConnection.getConnection());
 
+        // Buat model pasien
         PasienModel pasien = new PasienModel(id, name, dateOfBirth, phoneNumber, email, gender, bloodType, doctor);
 
+        // Tambah pasien ke database
         if (pasienController.tambahPasien(pasien)) {
             JOptionPane.showMessageDialog(this, "Data pasien berhasil disimpan dengan ID: " + id);
             clearInput();
         } else {
-            JOptionPane.showMessageDialog(this, "Gagal menyimpan data pasien");
+            JOptionPane.showMessageDialog(this, "Gagal menyimpan data pasien", "Kesalahan", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void setupHoverEffect(JPanel button, Color defaultColor, Color hoverColor) {
         button.setBackground(defaultColor);
 
@@ -284,8 +319,8 @@ public class DaftarPanel extends javax.swing.JPanel {
             }
         });
     }
-    
-    private void clearInput(){
+
+    private void clearInput() {
         txtFieldNama.setText("");
         txtFieldTglLahir.setText("");
         txtFieldHp.setText("");

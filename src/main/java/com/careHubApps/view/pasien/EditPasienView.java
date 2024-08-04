@@ -253,18 +253,37 @@ public class EditPasienView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void simpanPerubahanButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_simpanPerubahanButtonMouseClicked
-        // TODO add your handling code here:
-        String nama = txtFieldNama.getText();
-        String tglLahir = txtFieldTglLahir.getText();
-        String noTelpon = txtFieldHp.getText();
-        String email = txtFieldEmail.getText();
-        String jenisKelamin = comboJenKel.getSelectedItem().toString();
-        String golDarah = comboGolDarah.getSelectedItem().toString();
-        String dokter = comboDokter.getSelectedItem().toString();
+        String nama = txtFieldNama.getText().trim();
+        String tglLahir = txtFieldTglLahir.getText().trim();
+        String noTelpon = txtFieldHp.getText().trim();
+        String email = txtFieldEmail.getText().trim();
+        String jenisKelamin = comboJenKel.getSelectedItem().toString().trim();
+        String golDarah = comboGolDarah.getSelectedItem().toString().trim();
+        String dokter = comboDokter.getSelectedItem().toString().trim();
 
         // Validasi data
-        if (nama.isEmpty() || tglLahir.isEmpty() || noTelpon.isEmpty() || jenisKelamin.isEmpty() || golDarah.isEmpty() || dokter.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mohon lengkapi semua field!", "Error", JOptionPane.ERROR_MESSAGE);
+        if (nama.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nama tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (tglLahir.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tanggal lahir tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (noTelpon.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nomor telepon tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (jenisKelamin.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Jenis kelamin harus dipilih", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (golDarah.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Golongan darah harus dipilih", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (dokter.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Dokter harus dipilih", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
             return;
         }
 

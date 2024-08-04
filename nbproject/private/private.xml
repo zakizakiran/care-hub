@@ -4,12 +4,21 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/view/dokter/DokterPanel.java</file>
-            <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/view/dokter/TambahDokterView.java</file>
+            <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/model/ObatModel.java</file>
+            <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/controller/PasienController.java</file>
+            <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/view/obat/ObatPanel.java</file>
+            <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/view/obat/TambahObatView.java</file>
+            <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/view/pasien/PasienPanel.java</file>
+            <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/model/PasienModel.java</file>
             <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/model/DokterModel.java</file>
+            <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/controller/HomeController.java</file>
+            <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/view/AboutPanel.java</file>
+            <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/view/obat/EditObatView.java</file>
+            <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/view/dokter/TambahDokterView.java</file>
             <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/view/HomePanel.java</file>
             <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/controller/DokterController.java</file>
-            <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/controller/HomeController.java</file>
             <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/controller/ObatController.java</file>
+            <file>file:/D:/Zaki/Tugas%20Kuliah/Semester%202/PBO/TUGAS%20BESAR/CareHub/src/main/java/com/careHubApps/view/dokter/EditDokterView.java</file>
         </group>
     </open-files>
 </project-private>

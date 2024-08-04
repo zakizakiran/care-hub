@@ -212,7 +212,7 @@ public final class ObatPanel extends javax.swing.JPanel {
 
         jScrollPane1.setViewportView(bodyPanel);
 
-        mainPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 960, 500));
+        mainPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 960, 550));
 
         add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents

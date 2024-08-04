@@ -73,6 +73,28 @@ public class DokterController {
         return dokter;
     }
 
+     public boolean updateDokter(DokterModel dokter) {
+        Connection connection = dbConnection.getConnection();
+        boolean isUpdated = false;
+
+        String sql = "UPDATE dokter SET nama = ?, spesialis = ?, no_telpon = ?, alamat = ? WHERE id_dokter = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, dokter.getNama());
+            preparedStatement.setString(2, dokter.getSpesialis());
+            preparedStatement.setString(3, dokter.getNoTelpon());
+            preparedStatement.setString(4, dokter.getAlamat());
+            preparedStatement.setString(5, dokter.getId());
+
+            isUpdated = preparedStatement.executeUpdate() > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isUpdated;
+    }
+    
     public boolean hapusDokter(String dokterId) {
         Connection connection = dbConnection.getConnection();
         boolean isDeleted = false;
