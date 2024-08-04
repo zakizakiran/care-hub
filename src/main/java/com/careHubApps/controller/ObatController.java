@@ -8,19 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import main.java.com.careHubApps.DatabaseConnection;
-import main.java.com.careHubApps.model.AntrianModel;
 import main.java.com.careHubApps.model.ObatModel;
-import main.java.com.careHubApps.model.PasienModel;
 
 public class ObatController {
-    
+
     private final DatabaseConnection dbConnection;
 
     public ObatController() {
         dbConnection = new DatabaseConnection();
     }
-    
-    
+
     public boolean tambahObat(ObatModel obat) {
         Connection connection = dbConnection.getConnection();
         boolean isAdded = false;
@@ -43,13 +40,13 @@ public class ObatController {
 
         return isAdded;
     }
-    
-     public List<ObatModel> getAllObat() {
+
+    public List<ObatModel> getAllObat() {
         List<ObatModel> obat = new ArrayList<>();
         Connection connection = dbConnection.getConnection();
 
         String sql = "SELECT * FROM obat";
-        
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -60,7 +57,7 @@ public class ObatController {
                 String tglExp = resultSet.getString("exp_date");
                 int harga = resultSet.getInt("harga");
                 int stok = resultSet.getInt("stok");
-                
+
                 obat.add(new ObatModel(id, nama, kategori, tglExp, harga, stok));
             }
         } catch (SQLException e) {
@@ -69,7 +66,7 @@ public class ObatController {
 
         return obat;
     }
-     
+
     public boolean updateObat(ObatModel obat) {
         Connection connection = dbConnection.getConnection();
         boolean isUpdated = false;
@@ -83,7 +80,6 @@ public class ObatController {
             preparedStatement.setInt(4, obat.getHarga());
             preparedStatement.setInt(5, obat.getStok());
             preparedStatement.setString(6, obat.getId());
-            
 
             isUpdated = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -92,7 +88,7 @@ public class ObatController {
 
         return isUpdated;
     }
-     
+
     public boolean hapusObat(String obatId) {
         Connection connection = dbConnection.getConnection();
         boolean isDeleted = false;
@@ -107,8 +103,8 @@ public class ObatController {
         }
 
         return isDeleted;
-    } 
-    
+    }
+
     public String generateUniqueId(Connection connection) {
         String id;
         Random random = new Random();
@@ -131,5 +127,5 @@ public class ObatController {
         }
         return null;
     }
-    
+
 }

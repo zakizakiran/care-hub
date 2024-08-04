@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.com.careHubApps.view;
+package main.java.com.careHubApps.view.pasien;
 
 import java.awt.Font;
 import java.io.File;
@@ -112,7 +112,7 @@ public class DaftarPanel extends javax.swing.JPanel {
         labelButtonSimpan = new javax.swing.JLabel();
         comboGolDarah = new ComboBox("Golongan Darah");
         comboJenKel = new ComboBox("Jenis Kelamin");
-        comboDokter = new ComboBox("Pilih Dokter");
+        comboDokter = new ComboBox("Pilih Layanan");
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1080, 720));
@@ -235,7 +235,7 @@ public class DaftarPanel extends javax.swing.JPanel {
         comboJenKel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-Laki", "Perempuan" }));
         bodyPanel.add(comboJenKel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 180, 40));
 
-        comboDokter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dokter Umum", "Dokter Gigi", "THT", "Mata" }));
+        comboDokter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Umum", "Gigi", "THT", "Mata" }));
         bodyPanel.add(comboDokter, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 190, 40));
 
         mainPanel.add(bodyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 1000, 590));

@@ -1,6 +1,10 @@
 package main.java.com.careHubApps.view;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.File;
+import java.io.IOException;
 import resources.components.ShadowPanel;
 
 /**
@@ -14,6 +18,33 @@ public class AboutPanel extends javax.swing.JPanel {
      */
     public AboutPanel() {
         initComponents();
+        
+         try {
+            File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
+            File poppinsSemiBold = new File("src/resources/assets/fonts/Poppins-SemiBold.ttf");
+            
+            Font titleTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(20f);
+            Font nameTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(12f);
+            Font nimTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(12f);
+            
+            
+            titleAbout.setFont(titleTxtStyle);
+            
+            labelNamaZaki.setFont(nameTxtStyle);
+            labelNamaArdi.setFont(nameTxtStyle);
+            labelNamaDimas.setFont(nameTxtStyle);
+            labelNamaFariq.setFont(nameTxtStyle);
+            labelNamaTopik.setFont(nameTxtStyle);
+            
+            nimZaki.setFont(nimTxtStyle);
+            nimDimas.setFont(nimTxtStyle);
+            nimArdi.setFont(nimTxtStyle);
+            nimFariq.setFont(nimTxtStyle);
+            nimTopik.setFont(nimTxtStyle);
+            
+         } catch (FontFormatException | IOException e){
+             
+         }
     }
 
     /**
@@ -27,27 +58,27 @@ public class AboutPanel extends javax.swing.JPanel {
 
         mainPanel = new javax.swing.JPanel();
         headerPanel = new ShadowPanel(8, Color.decode("#DFDFDF"));
-        titleDataObat = new javax.swing.JLabel();
-        cardZaki = new ShadowPanel(6, Color.decode("#DFDFDF"));
+        titleAbout = new javax.swing.JLabel();
+        cardDimas = new ShadowPanel(6, Color.decode("#DFDFDF"));
         jLabel1 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        cardZaki1 = new ShadowPanel(6, Color.decode("#DFDFDF"));
+        nimDimas = new javax.swing.JLabel();
+        labelNamaDimas = new javax.swing.JLabel();
+        cardTopik = new ShadowPanel(6, Color.decode("#DFDFDF"));
         jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        cardZaki2 = new ShadowPanel(6, Color.decode("#DFDFDF"));
+        nimTopik = new javax.swing.JLabel();
+        labelNamaTopik = new javax.swing.JLabel();
+        cardZaki = new ShadowPanel(6, Color.decode("#DFDFDF"));
         jLabel3 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        cardZaki3 = new ShadowPanel(6, Color.decode("#DFDFDF"));
+        nimZaki = new javax.swing.JLabel();
+        labelNamaZaki = new javax.swing.JLabel();
+        cardFariq = new ShadowPanel(6, Color.decode("#DFDFDF"));
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        cardZaki4 = new ShadowPanel(6, Color.decode("#DFDFDF"));
+        nimFariq = new javax.swing.JLabel();
+        labelNamaFariq = new javax.swing.JLabel();
+        cardArdi = new ShadowPanel(6, Color.decode("#DFDFDF"));
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        nimArdi = new javax.swing.JLabel();
+        labelNamaArdi = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -59,8 +90,8 @@ public class AboutPanel extends javax.swing.JPanel {
 
         headerPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        titleDataObat.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        titleDataObat.setText("Meet Our Team");
+        titleAbout.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        titleAbout.setText("Meet Our Team");
 
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
@@ -68,134 +99,134 @@ public class AboutPanel extends javax.swing.JPanel {
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addComponent(titleDataObat)
+                .addComponent(titleAbout)
                 .addContainerGap(825, Short.MAX_VALUE))
         );
         headerPanelLayout.setVerticalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
-                .addComponent(titleDataObat, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(titleAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mainPanel.add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 1000, 70));
 
-        cardZaki.setBackground(new java.awt.Color(255, 255, 255));
-        cardZaki.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        cardDimas.setBackground(new java.awt.Color(255, 255, 255));
+        cardDimas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/dimas.png"))); // NOI18N
-        cardZaki.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 160));
+        cardDimas.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 190, 160));
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("10123206");
-        cardZaki.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 170, 20));
+        nimDimas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nimDimas.setText("10123211");
+        cardDimas.add(nimDimas, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 170, 20));
 
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Muhammad Dimas H P");
-        cardZaki.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 190, 30));
+        labelNamaDimas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelNamaDimas.setText("Muhammad Dimas H P");
+        cardDimas.add(labelNamaDimas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 190, 30));
 
-        mainPanel.add(cardZaki, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 110, 190, 260));
+        mainPanel.add(cardDimas, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 110, 250, 260));
 
-        cardZaki1.setBackground(new java.awt.Color(255, 255, 255));
-        cardZaki1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        cardTopik.setBackground(new java.awt.Color(255, 255, 255));
+        cardTopik.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/topik.png"))); // NOI18N
-        cardZaki1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 160));
+        cardTopik.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 190, 160));
 
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("10123206");
-        cardZaki1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 170, 20));
+        nimTopik.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nimTopik.setText("10123197");
+        cardTopik.add(nimTopik, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 170, 20));
 
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Topik Nur Rahman");
-        cardZaki1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 190, 30));
+        labelNamaTopik.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelNamaTopik.setText("Topik Nur Rahman");
+        cardTopik.add(labelNamaTopik, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 190, 30));
 
-        mainPanel.add(cardZaki1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 400, 190, 260));
+        mainPanel.add(cardTopik, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 400, 250, 260));
 
-        cardZaki2.setBackground(new java.awt.Color(255, 255, 255));
-        cardZaki2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        cardZaki.setBackground(new java.awt.Color(255, 255, 255));
+        cardZaki.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/zaki.png"))); // NOI18N
-        cardZaki2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 160));
+        cardZaki.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 190, 160));
 
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("10123206");
-        cardZaki2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 170, 20));
+        nimZaki.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nimZaki.setText("10123206");
+        cardZaki.add(nimZaki, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 170, 20));
 
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Mohamad Zaki Zakiran");
-        cardZaki2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 190, 30));
+        labelNamaZaki.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelNamaZaki.setText("Mohamad Zaki Zakiran");
+        cardZaki.add(labelNamaZaki, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 190, 30));
 
-        mainPanel.add(cardZaki2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 190, 260));
+        mainPanel.add(cardZaki, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 250, 260));
 
-        cardZaki3.setBackground(new java.awt.Color(255, 255, 255));
-        cardZaki3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        cardFariq.setBackground(new java.awt.Color(255, 255, 255));
+        cardFariq.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/fariq.png"))); // NOI18N
-        cardZaki3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 160));
+        cardFariq.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 190, 160));
 
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("10123206");
-        cardZaki3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 170, 20));
+        nimFariq.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nimFariq.setText("10123204");
+        cardFariq.add(nimFariq, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 170, 20));
 
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Fariq Daffa");
-        cardZaki3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 190, 30));
+        labelNamaFariq.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelNamaFariq.setText("Fariq Daffa");
+        cardFariq.add(labelNamaFariq, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 190, 30));
 
-        mainPanel.add(cardZaki3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 120, 190, 260));
+        mainPanel.add(cardFariq, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, 250, 260));
 
-        cardZaki4.setBackground(new java.awt.Color(255, 255, 255));
-        cardZaki4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        cardArdi.setBackground(new java.awt.Color(255, 255, 255));
+        cardArdi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/ardi.png"))); // NOI18N
-        cardZaki4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 160));
+        cardArdi.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 190, 160));
 
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("10123206");
-        cardZaki4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 170, 20));
+        nimArdi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nimArdi.setText("10123195");
+        cardArdi.add(nimArdi, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 170, 20));
 
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Ardi Saputra");
-        cardZaki4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 190, 30));
+        labelNamaArdi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelNamaArdi.setText("Ardi Saputra");
+        cardArdi.add(labelNamaArdi, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 190, 30));
 
-        mainPanel.add(cardZaki4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 190, 260));
+        mainPanel.add(cardArdi, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 250, 260));
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/team.png"))); // NOI18N
-        mainPanel.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 410, -1, -1));
+        mainPanel.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 410, -1, -1));
 
         add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel cardArdi;
+    private javax.swing.JPanel cardDimas;
+    private javax.swing.JPanel cardFariq;
+    private javax.swing.JPanel cardTopik;
     private javax.swing.JPanel cardZaki;
-    private javax.swing.JPanel cardZaki1;
-    private javax.swing.JPanel cardZaki2;
-    private javax.swing.JPanel cardZaki3;
-    private javax.swing.JPanel cardZaki4;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel labelNamaArdi;
+    private javax.swing.JLabel labelNamaDimas;
+    private javax.swing.JLabel labelNamaFariq;
+    private javax.swing.JLabel labelNamaTopik;
+    private javax.swing.JLabel labelNamaZaki;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JLabel titleDataObat;
+    private javax.swing.JLabel nimArdi;
+    private javax.swing.JLabel nimDimas;
+    private javax.swing.JLabel nimFariq;
+    private javax.swing.JLabel nimTopik;
+    private javax.swing.JLabel nimZaki;
+    private javax.swing.JLabel titleAbout;
     // End of variables declaration//GEN-END:variables
 }

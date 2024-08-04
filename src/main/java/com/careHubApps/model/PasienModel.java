@@ -8,7 +8,7 @@ public class PasienModel {
     private String email;
     private String jenisKelamin;
     private String golDarah;
-    private String dokter;
+    private String layanan;
 
     public PasienModel(String id, String nama, String tglLahir, String noTelpon, String email, String jenisKelamin, String golDarah, String dokter) {
         this.id = id;
@@ -18,7 +18,7 @@ public class PasienModel {
         this.email = email;
         this.jenisKelamin = jenisKelamin;
         this.golDarah = golDarah;
-        this.dokter = dokter;
+        this.layanan = dokter;
     }
 
     public String getId() {
@@ -77,12 +77,12 @@ public class PasienModel {
         this.golDarah = golDarah;
     }
 
-    public String getDokter() {
-        return dokter;
+    public String getLayanan() {
+        return layanan;
     }
 
-    public void setDokter(String dokter) {
-        this.dokter = dokter;
+    public void setLayanan(String dokter) {
+        this.layanan = dokter;
     }
 
 }

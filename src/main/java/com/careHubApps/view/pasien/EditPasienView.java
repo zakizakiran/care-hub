@@ -119,7 +119,7 @@ public class EditPasienView extends javax.swing.JFrame {
         labelButtonSimpan = new javax.swing.JLabel();
         comboGolDarah = new ComboBox("Golongan Darah");
         comboJenKel = new ComboBox("Jenis Kelamin");
-        comboDokter = new ComboBox("Pilih Dokter");
+        comboDokter = new ComboBox("Pilih Layanan");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit Data Pasien");
@@ -242,7 +242,7 @@ public class EditPasienView extends javax.swing.JFrame {
         comboJenKel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-Laki", "Perempuan" }));
         bodyPanel.add(comboJenKel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 180, 40));
 
-        comboDokter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dokter Umum", "Dokter Gigi", "THT", "Mata" }));
+        comboDokter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Umum", "Gigi", "THT", "Mata" }));
         bodyPanel.add(comboDokter, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 190, 40));
 
         mainPanel.add(bodyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 1000, 590));
@@ -290,7 +290,7 @@ public class EditPasienView extends javax.swing.JFrame {
         txtFieldEmail.setText(pasien.getEmail());
         comboJenKel.setSelectedItem(pasien.getJenisKelamin());
         comboGolDarah.setSelectedItem(pasien.getGolDarah());
-        comboDokter.setSelectedItem(pasien.getDokter());
+        comboDokter.setSelectedItem(pasien.getLayanan());
     }
 
     private void setIconImage() {

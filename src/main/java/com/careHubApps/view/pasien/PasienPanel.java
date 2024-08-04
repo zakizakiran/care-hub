@@ -381,7 +381,7 @@ public final class PasienPanel extends javax.swing.JPanel{
                 .filter(p -> p.getNama().toLowerCase().contains(searchText) ||
                              p.getNoTelpon().toLowerCase().contains(searchText) ||
                              p.getJenisKelamin().toLowerCase().contains(searchText) ||
-                             p.getDokter().toLowerCase().contains(searchText) ||
+                             p.getLayanan().toLowerCase().contains(searchText) ||
                              p.getId().toLowerCase().contains(searchText))
                 .collect(Collectors.toList());
             
@@ -520,7 +520,7 @@ public final class PasienPanel extends javax.swing.JPanel{
             JLabel titleJenKel = new JLabel("Jenis Kelamin");
             JLabel labelJenKel = new JLabel(pasien.getJenisKelamin());
             JLabel titleDokter = new JLabel("Layanan");
-            JLabel labelDokter = new JLabel(pasien.getDokter());
+            JLabel labelDokter = new JLabel(pasien.getLayanan());
 
             RoundedPanel buttonAntrian = new RoundedPanel(12, Color.decode("#508D4E"));
             JLabel buttonLabel = new JLabel("Tambah ke Antrian");
@@ -549,7 +549,7 @@ public final class PasienPanel extends javax.swing.JPanel{
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     antrianModel.setId_pasien(pasien.getId());
                     antrianModel.setNama(pasien.getNama());
-                    antrianModel.setDokter(pasien.getDokter());
+                    antrianModel.setLayanan(pasien.getLayanan());
 
                     antrianController.tambahAntrian(antrianModel);
                     JOptionPane.showMessageDialog(mainPanel, "Berhasil Menambahkan ke Antrian", "SUKSES", 1);
@@ -663,7 +663,7 @@ public final class PasienPanel extends javax.swing.JPanel{
 
    
      private void updateJumlahPasienPerDokter() {
-        Map<String, Integer> jumlahPasienPerDokter = pasienController.getJumlahPasienPerDokter();
+        Map<String, Integer> jumlahPasienPerDokter = pasienController.getJumlahPasienPerLayanan();
 
         labelNumberGigi.setText(String.valueOf(jumlahPasienPerDokter.getOrDefault("Dokter Gigi", 0)));
         labelNumberUmum.setText(String.valueOf(jumlahPasienPerDokter.getOrDefault("Dokter Umum", 0)));

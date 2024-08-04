@@ -1,26 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package main.java.com.careHubApps.view;
+package main.java.com.careHubApps.view.dokter;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import main.java.com.careHubApps.controller.AntrianController;
-import main.java.com.careHubApps.model.AntrianModel;
+import javax.swing.JTextArea;
+import main.java.com.careHubApps.controller.DokterController;
+import main.java.com.careHubApps.model.DokterModel;
 import resources.components.CustomTextField;
 import resources.components.RoundedPanel;
 import resources.components.ScrollBarCustom;
@@ -30,32 +23,46 @@ import resources.components.ShadowPanel;
  *
  * @author ASUS
  */
-public final class AntrianView extends javax.swing.JFrame {
+public final class DokterPanel extends javax.swing.JPanel {
+
+    List<DokterModel> dokterList;
+    DokterController dokterController;
+
+    TambahDokterView tambahDokterView;
     
-    List <AntrianModel> antrianList;
-    AntrianController antrianController;
-    AntrianModel antrianModel;
-    HomePanel homePanel;
-    JScrollPane scrollPane;
-
-
     /**
-     * Creates new form AntrianView
+     * Creates new form HomePanel
      */
-    public AntrianView() {
-        
-        homePanel = new HomePanel();
-        
-        this.antrianController = new AntrianController();
+    public DokterPanel() {
         initComponents();
-        loadDataAntrian();
-        
+
+        dokterController = new DokterController();
+
         ScrollBarCustom sb = new ScrollBarCustom();
-        jScrollPane2.setVerticalScrollBar(sb);
+        jScrollPane1.setVerticalScrollBar(sb);
         
+        tambahDokterView = new TambahDokterView();
+
+        loadDataDokter();
+
         setupHoverEffect(searchButton, Color.decode("#508D4E"), Color.BLACK);
         setupHoverEffect(refreshButton, Color.decode("#D9D9D9"), Color.BLACK);
-        setIconImage();
+        setupHoverEffect(tambahButton, Color.decode("#D9D9D9"), Color.BLACK);
+
+        try {
+            File poppinsRegular = new File("src/resources/assets/fonts/Poppins-Regular.ttf");
+            File poppinsSemiBold = new File("src/resources/assets/fonts/Poppins-SemiBold.ttf");
+
+            Font titleTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(20f);
+            Font searchTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsRegular).deriveFont(12f);
+
+            titleDataObat.setFont(titleTxtStyle);
+            searchTxtField.setFont(searchTxtStyle);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -69,28 +76,30 @@ public final class AntrianView extends javax.swing.JFrame {
 
         mainPanel = new javax.swing.JPanel();
         headerPanel = new ShadowPanel(8, Color.decode("#DFDFDF"));
-        titleDatPasien = new javax.swing.JLabel();
+        titleDataObat = new javax.swing.JLabel();
         searchTxtField = new CustomTextField(15, 15, 15, Color.decode("#80AF81"), "Search here", 8);
         searchButton = new RoundedPanel(12, Color.decode("#1A5319"));
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         refreshButton = new RoundedPanel(12, Color.decode("#1A5319"));
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        bodyPanel = new RoundedPanel(12, Color.white);
+        tambahButton = new RoundedPanel(12, Color.decode("#1A5319"));
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        bodyPanel = new RoundedPanel(12, Color.WHITE);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Antrian Pasien");
-        setPreferredSize(new java.awt.Dimension(1280, 680));
-        getContentPane().setLayout(new java.awt.CardLayout());
+        setBackground(new java.awt.Color(255, 255, 255));
+        setMinimumSize(new java.awt.Dimension(1020, 720));
+        setPreferredSize(new java.awt.Dimension(1040, 1080));
+        setLayout(new java.awt.CardLayout());
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
         mainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         headerPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        titleDatPasien.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        titleDatPasien.setText("Antrian Pasien");
+        titleDataObat.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        titleDataObat.setText("Data Dokter");
 
         searchTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -112,7 +121,7 @@ public final class AntrianView extends javax.swing.JFrame {
         jLabel1.setPreferredSize(new java.awt.Dimension(30, 30));
         searchButton.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/queue_icon.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/doctor_icon.png"))); // NOI18N
 
         refreshButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -128,6 +137,18 @@ public final class AntrianView extends javax.swing.JFrame {
         jLabel4.setPreferredSize(new java.awt.Dimension(30, 30));
         refreshButton.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        tambahButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tambahButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tambahButtonMouseClicked(evt);
+            }
+        });
+        tambahButton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/add_icon.png"))); // NOI18N
+        tambahButton.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 30, 30));
+
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
         headerPanelLayout.setHorizontalGroup(
@@ -136,14 +157,16 @@ public final class AntrianView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(titleDatPasien)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 529, Short.MAX_VALUE)
+                .addComponent(titleDataObat)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 464, Short.MAX_VALUE)
                 .addComponent(searchTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tambahButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
         headerPanelLayout.setVerticalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,30 +174,40 @@ public final class AntrianView extends javax.swing.JFrame {
                 .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
-                        .addComponent(titleDatPasien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(titleDataObat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(headerPanelLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(21, 21, 21)
                         .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(searchTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tambahButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        mainPanel.add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 1030, 70));
+        mainPanel.add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 1000, 70));
 
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 240, 1));
-        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         bodyPanel.setBackground(new java.awt.Color(255, 255, 255));
-        bodyPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jScrollPane2.setViewportView(bodyPanel);
 
-        mainPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 1130, 750));
+        javax.swing.GroupLayout bodyPanelLayout = new javax.swing.GroupLayout(bodyPanel);
+        bodyPanel.setLayout(bodyPanelLayout);
+        bodyPanelLayout.setHorizontalGroup(
+            bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 948, Short.MAX_VALUE)
+        );
+        bodyPanelLayout.setVerticalGroup(
+            bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 918, Short.MAX_VALUE)
+        );
 
-        getContentPane().add(mainPanel, "card2");
+        jScrollPane1.setViewportView(bodyPanel);
 
-        pack();
+        mainPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 960, 500));
+
+        add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchTxtFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTxtFieldKeyTyped
@@ -189,35 +222,45 @@ public final class AntrianView extends javax.swing.JFrame {
 
     private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
         // TODO add your handling code here:
-        loadDataAntrian();
+        loadDataDokter();
+        displayDokter(dokterList);
     }//GEN-LAST:event_refreshButtonMouseClicked
+
+    private void tambahButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tambahButtonMouseClicked
+        // TODO add your handling code here:
+        tambahDokterView.setVisible(true);
+    }//GEN-LAST:event_tambahButtonMouseClicked
 
     private void performSearch() {
         String searchText = searchTxtField.getText().trim().toLowerCase();
-        
-        if (searchText.isEmpty()) {
-            loadDataAntrian();
-            displayQueues(antrianList);
-        } else {
-            List<AntrianModel> filteredQueues = antrianList.stream()
-                .filter(q -> q.getNama().toLowerCase().contains(searchText) ||
-                        q.getId().toLowerCase().contains(searchText) ||
-                        q.getRuang().toLowerCase().contains(searchText) ||
-                        q.getDokter().toLowerCase().contains(searchText))
-                .collect(Collectors.toList());
-    
-            System.out.println("Search performed, number of filtered items: " + filteredQueues.size());
 
-            
-            if (filteredQueues.isEmpty()) {
+        if (searchText.isEmpty()) {
+            loadDataDokter();
+            displayDokter(dokterList);
+        } else {
+            List<DokterModel> filteredDokter = dokterList.stream()
+                    .filter(d -> d.getNama().toLowerCase().contains(searchText)
+                    || d.getId().toLowerCase().contains(searchText)
+                    || d.getSpesialis().toLowerCase().contains(searchText))
+                    .collect(Collectors.toList());
+
+            if (filteredDokter.isEmpty()) {
                 displayNoDataFound();
             } else {
-                displayQueues(filteredQueues);
+                displayDokter(filteredDokter);
             }
         }
-        
     }
-    
+
+    public void loadDataDokter() {
+        this.dokterList = dokterController.getAllDokter();
+        if (dokterList == null || dokterList.isEmpty()) {
+            emptyDataDisplay();
+        } else {
+            displayDokter(dokterList);
+        }
+    }
+
     private void displayNoDataFound() {
         bodyPanel.removeAll();
 
@@ -231,7 +274,7 @@ public final class AntrianView extends javax.swing.JFrame {
             Font labelTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(16f);
             noDataLabel.setFont(labelTxtStyle);
             noDataLabel.setForeground(Color.decode("#508D4E"));
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -239,6 +282,7 @@ public final class AntrianView extends javax.swing.JFrame {
         noDataImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         bodyPanel.setLayout(null);  // Set layout to null for AbsoluteLayout
+        bodyPanel.setBounds(0, 0, 1040, 400);
 
         int imageWidth = 128;  // Adjust this to the actual width of your image
         int imageHeight = 128; // Adjust this to the actual height of your image
@@ -260,11 +304,11 @@ public final class AntrianView extends javax.swing.JFrame {
         bodyPanel.revalidate();
         bodyPanel.repaint();
     }
-    
-    private void emptyDataDisplay(){
+
+    private void emptyDataDisplay() {
         bodyPanel.removeAll();
-        
-        JLabel noDataLabel = new JLabel("Tidak Ada Antrian");
+
+        JLabel noDataLabel = new JLabel("Tidak Ada Data Dokter");
         JLabel noDataImage = new JLabel();
 
         noDataImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/assets/images/thinking.png")));
@@ -274,18 +318,19 @@ public final class AntrianView extends javax.swing.JFrame {
             Font labelTxtStyle = Font.createFont(Font.TRUETYPE_FONT, poppinsSemiBold).deriveFont(16f);
             noDataLabel.setFont(labelTxtStyle);
             noDataLabel.setForeground(Color.decode("#508D4E"));
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         noDataLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         noDataImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        bodyPanel.setLayout(null);  // Set layout to null for AbsoluteLayout
+        bodyPanel.setLayout(null);
+        bodyPanel.setBounds(0, 0, 1040, 400);
 
-        int imageWidth = 128;  // Adjust this to the actual width of your image
-        int imageHeight = 128; // Adjust this to the actual height of your image
-        int labelHeight = 30;  // Height of the label
+        int imageWidth = 128;
+        int imageHeight = 128;
+        int labelHeight = 30;
         int panelWidth = bodyPanel.getWidth();
         int panelHeight = bodyPanel.getHeight();
 
@@ -303,62 +348,87 @@ public final class AntrianView extends javax.swing.JFrame {
         bodyPanel.revalidate();
         bodyPanel.repaint();
     }
-    
-    public void loadDataAntrian() {
-        this.antrianList = antrianController.getAllAntrian();        
-        if (antrianList == null || antrianList.isEmpty()) {
-            emptyDataDisplay();
-        } else {
-            displayQueues(antrianList);
-        }
-        
-    }
 
-    private void displayQueues(List<AntrianModel> queues) {
-        bodyPanel.removeAll(); // Clear existing components
+    private void displayDokter(List<DokterModel> doctors) {
+        bodyPanel.removeAll();
         bodyPanel.repaint();
         bodyPanel.revalidate();
 
-        if (queues == null || queues.isEmpty()) { 
+        if (doctors == null || doctors.isEmpty()) {
             emptyDataDisplay();
         } else {
-            bodyPanel.setLayout(null); // Use absolute layout
+            bodyPanel.setLayout(null);
 
-            int x = 20, y = 20; // Starting position for the first card
-            int cardWidth = 320, cardHeight = 360;
+            int x = 20, y = 20;
+            int cardWidth = 420, cardHeight = 420;
             int padding = 20;
+            int cardsPerRow = 2;
 
-            for (AntrianModel antrian : queues) {
-                ShadowPanel cardAntrian = new ShadowPanel(8, Color.decode("#DFDFDF"));
-                cardAntrian.setBackground(Color.WHITE);
-                cardAntrian.setBounds(x, y, cardWidth, cardHeight); // Set position and size
+            for (int i = 0; i < doctors.size(); i++) {
+                DokterModel dokter = doctors.get(i);
+                ShadowPanel cardDokter = new ShadowPanel(8, Color.decode("#DFDFDF"));
+                cardDokter.setBackground(Color.WHITE);
+                cardDokter.setBounds(x, y, cardWidth, cardHeight);
 
-                JLabel labelId = new JLabel("ID: " + antrian.getId());
-                JLabel titleNama = new JLabel("Nama Pasien");
-                JLabel labelNama = new JLabel(antrian.getNama());
-                JLabel titleWaktu = new JLabel("Waktu");
-                JLabel labelWaktu = new JLabel(antrian.getWaktu());
-                JLabel titleLayanan = new JLabel("Layanan");
-                JLabel labelLayanan = new JLabel(antrian.getDokter());
-                JLabel titleRuang = new JLabel("Ruang");
-                JLabel labelRuang = new JLabel(antrian.getRuang());
-                
+                JLabel labelId = new JLabel("ID: " + dokter.getId());
+                JLabel titleNama = new JLabel("Nama Dokter");
+                JLabel labelNama = new JLabel(dokter.getNama());
+                JLabel titleSpesialis = new JLabel("Spesialis");
+                JLabel labelSpesialis = new JLabel(dokter.getSpesialis());
+                JLabel titleTelpon = new JLabel("No Telpon");
+                JLabel labelTelpon = new JLabel(dokter.getNoTelpon());
+                JLabel titleAlamat = new JLabel("Alamat");
 
-                RoundedPanel buttonAntrian = new RoundedPanel(12, Color.decode("#508D4E"));
-                JLabel buttonLabel = new JLabel("Panggil Antrian");
-                buttonLabel.setForeground(Color.WHITE); // Set text color
-                buttonAntrian.add(buttonLabel);
-                buttonAntrian.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                // Menggunakan JTextArea untuk labelAlamat
+                JTextArea labelAlamat = new JTextArea(dokter.getAlamat());
+                labelAlamat.setLineWrap(true);
+                labelAlamat.setWrapStyleWord(true);
+                labelAlamat.setEditable(false);
+                labelAlamat.setOpaque(false); // Mengatur agar JTextArea transparan seperti JLabel
+                labelAlamat.setBorder(null);  // Menghapus border default
+                labelAlamat.setFocusable(false); // Non-fokus agar terlihat seperti JLabel
 
-                setupHoverEffect(buttonAntrian, Color.decode("#508D4E"), Color.BLACK);
+                RoundedPanel buttonEdit = new RoundedPanel(12, Color.white);
+                JLabel editLabel = new JLabel("Edit Dokter");
+                editLabel.setForeground(Color.WHITE);
+                buttonEdit.add(editLabel);
+                buttonEdit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-                buttonAntrian.addMouseListener(new java.awt.event.MouseAdapter() {
+                RoundedPanel buttonHapus = new RoundedPanel(12, Color.white);
+                JLabel hapusLabel = new JLabel("Hapus Dokter");
+                hapusLabel.setForeground(Color.RED); // Set text color
+                buttonHapus.add(hapusLabel);
+                buttonHapus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+                setupHoverEffect(buttonEdit, Color.decode("#508D4E"), Color.BLACK);
+                setupHoverEffect(buttonHapus, Color.WHITE, Color.RED);
+
+                buttonEdit.addMouseListener(new java.awt.event.MouseAdapter() {
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        int response = JOptionPane.showConfirmDialog(null, "Apakah Anda akan memanggil " + antrian.getNama(), "Konfirmasi", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        // Implementasi aksi untuk edit dokter
+                    }
+                });
+
+                buttonHapus.addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseEntered(java.awt.event.MouseEvent evt) {
+                        hapusLabel.setForeground(Color.WHITE);
+                    }
+
+                    @Override
+                    public void mouseExited(java.awt.event.MouseEvent evt) {
+                        hapusLabel.setForeground(Color.RED);
+                    }
+
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        int response = JOptionPane.showConfirmDialog(null, "Anda yakin ingin menghapus " + dokter.getNama(), "Konfirmasi", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                         if (response == JOptionPane.YES_OPTION) {
-                            antrianController.panggilAntrian(antrian.getId());
-                            loadDataAntrian();
+                            // Implementasi aksi untuk menghapus dokter
+                            dokterController.hapusDokter(dokter.getId());
+                            loadDataDokter();
+                            displayDokter(dokterList);
                         }
                     }
                 });
@@ -372,64 +442,58 @@ public final class AntrianView extends javax.swing.JFrame {
 
                     titleNama.setFont(titleTxtStyle);
                     titleNama.setForeground(Color.decode("#508D4E"));
-                    titleWaktu.setFont(titleTxtStyle);
-                    titleWaktu.setForeground(Color.decode("#508D4E"));
-                    titleLayanan.setFont(titleTxtStyle);
-                    titleLayanan.setForeground(Color.decode("#508D4E"));
-                    titleRuang.setFont(titleTxtStyle);
-                    titleRuang.setForeground(Color.decode("#508D4E"));
+                    titleSpesialis.setFont(titleTxtStyle);
+                    titleSpesialis.setForeground(Color.decode("#508D4E"));
+                    titleTelpon.setFont(titleTxtStyle);
+                    titleTelpon.setForeground(Color.decode("#508D4E"));
+                    titleAlamat.setFont(titleTxtStyle);
+                    titleAlamat.setForeground(Color.decode("#508D4E"));
 
                     labelId.setForeground(Color.decode("#508D4E"));
                     labelId.setFont(titleTxtStyle);
                     labelNama.setFont(cardTxtStyle);
-                    labelWaktu.setFont(cardTxtStyle);
-                    labelLayanan.setFont(cardTxtStyle);
-                    labelRuang.setFont(cardTxtStyle);
-                    buttonLabel.setFont(cardTxtStyle);
+                    labelSpesialis.setFont(cardTxtStyle);
+                    labelTelpon.setFont(cardTxtStyle);
+                    labelAlamat.setFont(cardTxtStyle); // Set font untuk JTextArea
+                    hapusLabel.setFont(cardTxtStyle);
+                    editLabel.setFont(cardTxtStyle);
 
-                } catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                buttonAntrian.setPreferredSize(new java.awt.Dimension(280, 36));
+                buttonHapus.setPreferredSize(new java.awt.Dimension(360, 36));
+                buttonEdit.setPreferredSize(new java.awt.Dimension(360, 36));
 
-                cardAntrian.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-                cardAntrian.add(labelId, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
-                cardAntrian.add(titleNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
-                cardAntrian.add(labelNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
-                cardAntrian.add(titleWaktu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
-                cardAntrian.add(labelWaktu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
-                cardAntrian.add(titleLayanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
-                cardAntrian.add(labelLayanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
-                cardAntrian.add(titleRuang, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
-                cardAntrian.add(labelRuang, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
-                cardAntrian.add(buttonAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
+                cardDokter.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+                cardDokter.add(labelId, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+                cardDokter.add(titleNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+                cardDokter.add(labelNama, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+                cardDokter.add(titleSpesialis, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
+                cardDokter.add(labelSpesialis, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
+                cardDokter.add(titleTelpon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
+                cardDokter.add(labelTelpon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+                cardDokter.add(titleAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+                cardDokter.add(labelAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, cardWidth - 40, 60)); // Mengatur ukuran dan posisi JTextArea
+                cardDokter.add(buttonEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, -1));
+                cardDokter.add(buttonHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, -1));
 
-                bodyPanel.add(cardAntrian);
+                bodyPanel.add(cardDokter);
 
-                x += cardWidth + padding;
-                if (x + cardWidth + padding > bodyPanel.getWidth()) {
+                if ((i + 1) % cardsPerRow == 0) {
                     x = 20;
                     y += cardHeight + padding;
+                } else {
+                    x += cardWidth + padding;
                 }
             }
 
-            // Adjust the size of bodyPanel to fit all cards
             bodyPanel.setPreferredSize(new Dimension(bodyPanel.getWidth(), y + cardHeight + padding));
             bodyPanel.revalidate();
             bodyPanel.repaint();
         }
     }
-    
-    private void setIconImage() {
-        try {
-            Image icon = ImageIO.read(new File("src/resources/assets/images/logo_main.png"));
-            setIconImage(icon);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
+
     private void setupHoverEffect(JPanel button, Color defaultColor, Color hoverColor) {
         button.setBackground(defaultColor);
 
@@ -445,40 +509,6 @@ public final class AntrianView extends javax.swing.JFrame {
             }
         });
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AntrianView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AntrianView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AntrianView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AntrianView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AntrianView().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bodyPanel;
@@ -486,11 +516,13 @@ public final class AntrianView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel refreshButton;
     private javax.swing.JPanel searchButton;
     private javax.swing.JTextField searchTxtField;
-    private javax.swing.JLabel titleDatPasien;
+    private javax.swing.JPanel tambahButton;
+    private javax.swing.JLabel titleDataObat;
     // End of variables declaration//GEN-END:variables
 }

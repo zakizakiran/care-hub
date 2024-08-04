@@ -1,4 +1,5 @@
 package main.java.com.careHubApps.view;
+import main.java.com.careHubApps.view.antrian.AntrianView;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -100,6 +101,7 @@ public final class HomePanel extends javax.swing.JPanel {
         labelNama.setText(nama);
         updateJumlahPasien();
         updateJumlahAntrian();
+        updateJumlahDokter();
         loadAntrianData();
 
 }
@@ -296,13 +298,13 @@ public final class HomePanel extends javax.swing.JPanel {
         tabelAntrian.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelAntrian.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No", "ID Antrian", "ID Pasien", "Nama", "Waktu", "Dokter", "Ruang"
+                "No", "ID Antrian", "ID Pasien", "Nama", "Waktu", "Layanan", "Dokter", "Ruang"
             }
         ));
         tabelAntrian.setFocusable(false);
@@ -401,6 +403,11 @@ public final class HomePanel extends javax.swing.JPanel {
         int jumlahAntrian = homeController.hitungAntrian();
         labelNumberAntrian.setText(String.valueOf(jumlahAntrian));
     }
+
+    public void updateJumlahDokter() {
+        int jumlahDokter = homeController.hitungDokter();
+        labelNumberDokter.setText(String.valueOf(jumlahDokter));
+    }
     
     public void loadAntrianData() {
         List<AntrianModel> antrianList = antrianController.getAllAntrian();
@@ -413,6 +420,7 @@ public final class HomePanel extends javax.swing.JPanel {
                 antrian.getId_pasien(),
                 antrian.getNama(),
                 antrian.getWaktu(),
+                antrian.getLayanan(),
                 antrian.getDokter(),
                 antrian.getRuang()
             });

@@ -5,6 +5,8 @@
  */
 package main.java.com.careHubApps.view;
 
+import main.java.com.careHubApps.view.pasien.DaftarPanel;
+import main.java.com.careHubApps.view.dokter.DokterPanel;
 import main.java.com.careHubApps.view.obat.ObatPanel;
 import main.java.com.careHubApps.view.pasien.PasienPanel;
 import java.awt.Color;

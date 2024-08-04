@@ -7,6 +7,7 @@ public class AntrianModel {
     private String nama;
     private String ruang;
     private String waktu;
+    private String layanan;
     private String dokter;
 
     // Getters and Setters
@@ -59,4 +60,14 @@ public class AntrianModel {
     public void setDokter(String dokter) {
         this.dokter = dokter;
     }
+
+    public String getLayanan() {
+        return layanan;
+    }
+
+    public void setLayanan(String layanan) {
+        this.layanan = layanan;
+    }
+    
+    
 }

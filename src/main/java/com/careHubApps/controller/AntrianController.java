@@ -29,28 +29,38 @@ public class AntrianController {
 
     public void tambahAntrian(AntrianModel antrian) {
         Connection connection = dbConnection.getConnection();
-        String query = "INSERT INTO antrian (id_antrian, id_pasien, nama, waktu, dokter, ruang) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO antrian (id_antrian, id_pasien, nama, waktu, id_dokter, dokter, layanan, ruang) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
+            // Select a doctor based on the service type
+            String[] dokterDetails = pilihDokter(antrian.getLayanan());
+            String dokterId = dokterDetails[0];
+            String dokterNama = dokterDetails[1];
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            // Generate unique ID based on the doctor type
-            String uniqueId = generateUniqueId(antrian.getDokter());
+
+            // Generate unique ID based on the service type
+            String uniqueId = generateUniqueId(antrian.getLayanan());
             preparedStatement.setString(1, uniqueId);
             preparedStatement.setString(2, antrian.getId_pasien());
             preparedStatement.setString(3, antrian.getNama());
 
-            // Mendapatkan waktu saat ini
+            // Get the current time
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String formattedNow = now.format(formatter);
 
             preparedStatement.setString(4, formattedNow);
-            preparedStatement.setString(5, antrian.getDokter());
 
-             // Determine room based on doctor type
-            String room = determineRoom(antrian.getDokter());
-            preparedStatement.setString(6, room);
-            
+            // Set the doctor's ID and name
+            preparedStatement.setString(5, dokterId);  // Add id_dokter
+            preparedStatement.setString(6, dokterNama);
+            preparedStatement.setString(7, antrian.getLayanan());
+
+            // Determine room based on service type
+            String room = determineRoom(antrian.getLayanan());
+            preparedStatement.setString(8, room);
+
             preparedStatement.executeUpdate();
             System.out.println("Data antrian berhasil ditambahkan dengan ID: " + uniqueId);
         } catch (SQLException e) {
@@ -59,13 +69,13 @@ public class AntrianController {
         }
     }
 
-    public static String generateUniqueId(String dokter) {
+    public static String generateUniqueId(String layanan) {
         String prefix;
-        switch (dokter.toLowerCase()) {
-            case "dokter gigi":
+        switch (layanan.toLowerCase()) {
+            case "gigi":
                 prefix = "DG-";
                 break;
-            case "dokter umum":
+            case "umum":
                 prefix = "DU-";
                 break;
             case "tht":
@@ -75,12 +85,11 @@ public class AntrianController {
                 prefix = "MT-";
                 break;
             default:
-                throw new IllegalArgumentException("Jenis dokter tidak valid: " + dokter);
+                throw new IllegalArgumentException("Jenis dokter tidak valid: " + layanan);
         }
 
         String uniqueId;
         do {
-            // Generate a random number and ensure it's zero-padded to 5 digits
             String randomNumber = IntStream.range(0, 5)
                     .mapToObj(i -> Integer.toString(random.nextInt(10)))
                     .collect(Collectors.joining(""));
@@ -90,26 +99,26 @@ public class AntrianController {
         usedIds.add(uniqueId);
         return uniqueId;
     }
-    
-    public String determineRoom(String dokter) {
-        switch (dokter.toLowerCase()) {
-            case "dokter gigi":
+
+    public String determineRoom(String layanan) {
+        switch (layanan.toLowerCase()) {
+            case "gigi":
                 return "R-02";
-            case "dokter umum":
+            case "umum":
                 return "R-03";
             case "tht":
                 return "R-04";
             case "mata":
                 return "R-05";
             default:
-                throw new IllegalArgumentException("Jenis dokter tidak valid: " + dokter);
+                throw new IllegalArgumentException("Jenis dokter tidak valid: " + layanan);
         }
     }
-    
+
     public List<AntrianModel> getAllAntrian() {
         List<AntrianModel> antrianList = new ArrayList<>();
         Connection connection = dbConnection.getConnection();
-        String query = "SELECT id_antrian, id_pasien, nama, waktu, dokter, ruang FROM antrian ORDER BY waktu ASC";
+        String query = "SELECT id_antrian, id_pasien, nama, waktu, dokter, layanan, ruang FROM antrian ORDER BY waktu ASC";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -122,6 +131,7 @@ public class AntrianController {
                 antrian.setNama(resultSet.getString("nama"));
                 antrian.setWaktu(resultSet.getString("waktu"));
                 antrian.setDokter(resultSet.getString("dokter"));
+                antrian.setLayanan(resultSet.getString("layanan"));
                 antrian.setRuang(resultSet.getString("ruang"));
 
                 antrianList.add(antrian);
@@ -132,7 +142,27 @@ public class AntrianController {
 
         return antrianList;
     }
-    
+
+    public String[] pilihDokter(String layanan) {
+        Connection connection = dbConnection.getConnection();
+        String query = "SELECT id_dokter, nama FROM dokter WHERE spesialis = ? ORDER BY RAND() LIMIT 1";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, layanan);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return new String[]{resultSet.getString("id_dokter"), resultSet.getString("nama")};
+            } else {
+                throw new IllegalArgumentException("Tidak ada dokter yang tersedia untuk layanan: " + layanan);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Gagal memilih dokter.");
+        }
+    }
+
     public boolean panggilAntrian(String antrianId) {
         Connection connection = dbConnection.getConnection();
         boolean isDeleted = false;
