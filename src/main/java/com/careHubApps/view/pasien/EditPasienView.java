@@ -274,6 +274,10 @@ public class EditPasienView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Nomor telepon tidak boleh kosong", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (!noTelpon.matches("\\d{10,12}")) { // Contoh validasi nomor telepon harus angka dan panjang 10-12 digit
+            JOptionPane.showMessageDialog(this, "Nomor telepon harus berupa angka dan panjang 10-12 digit", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (jenisKelamin.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Jenis kelamin harus dipilih", "Kesalahan Input", JOptionPane.ERROR_MESSAGE);
             return;
